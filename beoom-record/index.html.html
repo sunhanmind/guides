@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>비움명상 — 한 주의 여정, 7년의 기록 · 선한인연 선한명상</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf8f4;
+  --bg-warm: #f5f1ea;
+  --bg-card: #ffffff;
+  --ink: #2c2a26;
+  --ink-light: #6b6560;
+  --ink-faint: #a09890;
+  --ink-whisper: #c9c2ba;
+
+  --accent-body: #c5785c;
+  --accent-feel: #7a9e7e;
+  --accent-mind: #6882a8;
+  --accent-life: #9b7bb8;
+  --accent-new:  #c4956a;
+
+  --border: #e8e2da;
+  --border-soft: #efe9e0;
+  --shadow: rgba(44,42,38,0.06);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.75;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.locked { overflow: hidden; }
+body.unlocked #lock-screen { display: none; }
+
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ========== 잠금 화면 ========== */
+#lock-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+}
+
+.lock-inner { max-width: 400px; width: 100%; text-align: center; }
+
+.lock-mark {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.lock-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.4;
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+}
+
+.lock-sub {
+  font-size: 13px;
+  color: var(--ink-light);
+  font-weight: 300;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.lock-input-wrap { display: flex; gap: 8px; margin-bottom: 16px; }
+
+.lock-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.lock-input:focus { border-color: var(--accent-mind); }
+
+.lock-btn {
+  padding: 14px 24px;
+  border: none;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+.lock-btn:hover { opacity: 0.85; }
+
+.lock-error {
+  font-size: 12px;
+  color: var(--accent-body);
+  min-height: 18px;
+  margin-top: 4px;
+}
+
+.lock-note {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--ink-faint);
+  line-height: 1.7;
+  letter-spacing: 0.5px;
+}
+
+/* ========== HEADER ========== */
+.header {
+  text-align: center;
+  margin-bottom: 64px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.header-badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border: 1px solid var(--border);
+  padding: 5px 18px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 1.3;
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+}
+
+.header h1 .small {
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink-light);
+  margin-top: 8px;
+  letter-spacing: 0;
+}
+
+.header .subtitle {
+  color: var(--ink-light);
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.header .version {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 10px;
+  color: var(--ink-whisper);
+  letter-spacing: 2px;
+}
+
+/* ========== TOC ========== */
+.toc {
+  background: var(--bg-warm);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 56px;
+}
+
+.toc-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-light);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 24px;
+}
+
+.toc-item {
+  font-size: 13px;
+  color: var(--ink-light);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 2px 0;
+}
+
+.toc-num {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  color: var(--ink-faint);
+  min-width: 20px;
+}
+
+.toc-item a { color: inherit; text-decoration: none; transition: color 0.2s; }
+.toc-item a:hover { color: var(--accent-mind); }
+
+/* ========== SECTION ========== */
+.section { margin-bottom: 56px; scroll-margin-top: 24px; }
+
+.section-number {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.section h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 18px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.section h3 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 16px;
+  margin: 28px 0 12px;
+  line-height: 1.5;
+}
+
+.section p, .section li {
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.section p + p { margin-top: 14px; }
+
+.section strong { font-weight: 500; color: var(--ink); }
+
+/* ========== QUOTE ========== */
+.quote {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 19px;
+  font-weight: 400;
+  text-align: center;
+  padding: 36px 24px;
+  margin: 32px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  color: var(--ink);
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+}
+
+.quote em {
+  font-style: normal;
+  color: var(--ink-faint);
+  font-size: 12px;
+  display: block;
+  margin-top: 10px;
+  letter-spacing: 1px;
+}
+
+/* ========== KEY CONCEPT ========== */
+.key-concept {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-body);
+  padding: 20px 24px;
+  margin: 22px 0;
+  border-radius: 0 8px 8px 0;
+}
+.key-concept.feel { border-left-color: var(--accent-feel); }
+.key-concept.mind { border-left-color: var(--accent-mind); }
+.key-concept.life { border-left-color: var(--accent-life); }
+
+.key-concept strong {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.key-concept p {
+  font-size: 14px;
+  color: var(--ink-light);
+  line-height: 1.7;
+}
+
+/* ========== 헌사 박스 ========== */
+.dedication {
+  background: var(--bg-warm);
+  border-radius: 14px;
+  padding: 32px 32px;
+  margin: 24px 0;
+  text-align: center;
+  font-family: 'Noto Serif KR', serif;
+  position: relative;
+}
+
+.dedication-mark {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.dedication-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.85;
+  letter-spacing: -0.01em;
+}
+
+.dedication-text strong {
+  font-weight: 700;
+}
+
+/* ========== 7년 통계 ========== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 28px 0;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 14px;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--accent-body);
+  line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.stat-card:nth-child(2) .stat-num { color: var(--accent-feel); }
+.stat-card:nth-child(3) .stat-num { color: var(--accent-mind); }
+.stat-card:nth-child(4) .stat-num { color: var(--accent-life); }
+
+.stat-num small {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--ink-light);
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+}
+
+/* ========== 연표 (가로 타임라인) ========== */
+.era-grid {
+  margin: 28px 0;
+}
+
+.era-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.era-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+}
+
+.era-item.era1::before { background: var(--accent-feel); }
+.era-item.era2::before { background: var(--accent-body); }
+.era-item.era3::before { background: var(--accent-mind); }
+.era-item.era4::before { background: var(--accent-life); }
+.era-item.era5::before { background: var(--accent-new); }
+.era-item.era6::before { background: var(--ink); }
+
+.era-period {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.era-title {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.era-keyword {
+  display: inline-block;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--ink-light);
+  background: var(--bg-warm);
+  padding: 3px 12px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+}
+
+.era-desc {
+  font-size: 13px;
+  color: var(--ink-light);
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.era-desc strong { color: var(--ink); font-weight: 500; }
+
+/* ========== 원년 멤버 카드 ========== */
+.member-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 28px 0;
+}
+
+.member-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 22px;
+  position: relative;
+}
+
+.member-name {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-soft);
+  letter-spacing: -0.01em;
+}
+
+.member-quote {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  color: var(--ink-light);
+  font-weight: 400;
+  line-height: 1.75;
+  font-style: italic;
+  padding-left: 14px;
+  border-left: 2px solid var(--border);
+  margin-bottom: 10px;
+}
+
+.member-arc {
+  font-size: 12px;
+  color: var(--ink-light);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.member-arc strong { color: var(--ink); font-weight: 500; }
+
+.member-fifth {
+  background: var(--bg-warm);
+  border-radius: 14px;
+  padding: 24px 26px;
+  margin: 12px 0 24px;
+  text-align: center;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 16px;
+  color: var(--ink);
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+}
+
+.member-fifth strong { font-weight: 700; }
+
+/* ========== 7일 타임라인 ========== */
+.week-timeline {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  margin: 28px 0;
+}
+
+.week-row {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 18px;
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--border);
+  align-items: start;
+}
+
+.week-row:last-child { border-bottom: none; }
+
+.week-day { text-align: center; padding-top: 2px; }
+
+.week-day-label {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.week-day-eng {
+  font-size: 9px;
+  color: var(--ink-faint);
+  letter-spacing: 1.5px;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+
+.week-content {
+  font-size: 13px;
+  color: var(--ink-light);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.week-content strong { color: var(--ink); font-weight: 500; }
+
+.week-tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-right: 6px;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.week-tag.tag-prep { background: #f5f1ea; color: var(--ink-light); }
+.week-tag.tag-empty { background: #fdf6f3; color: var(--accent-body); }
+.week-tag.tag-on { background: #f5f8f5; color: var(--accent-feel); }
+.week-tag.tag-recover { background: #f3f5f9; color: var(--accent-mind); }
+
+/* ========== 섭생 3단계 ========== */
+.diet-stages {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 28px 0;
+}
+
+.diet-stage-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.diet-stage-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.diet-stage-card:nth-child(1)::before { background: var(--accent-body); }
+.diet-stage-card:nth-child(2)::before { background: var(--accent-feel); }
+.diet-stage-card:nth-child(3)::before { background: var(--accent-mind); }
+
+.diet-stage-num {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 6px;
+  color: var(--ink-faint);
+}
+
+.diet-stage-card:nth-child(1) .diet-stage-num { color: var(--accent-body); }
+.diet-stage-card:nth-child(2) .diet-stage-num { color: var(--accent-feel); }
+.diet-stage-card:nth-child(3) .diet-stage-num { color: var(--accent-mind); }
+
+.diet-stage-title {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.diet-stage-desc {
+  font-size: 12px;
+  color: var(--ink-light);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* ========== 회고 인용 박스 ========== */
+.recall-box {
+  background: var(--bg-warm);
+  border-radius: 14px;
+  padding: 32px 32px;
+  margin: 28px 0;
+  position: relative;
+}
+
+.recall-mark {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 60px;
+  font-weight: 900;
+  color: var(--ink-whisper);
+  line-height: 1;
+  position: absolute;
+  top: 12px;
+  left: 22px;
+  font-style: italic;
+}
+
+.recall-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.9;
+  letter-spacing: -0.01em;
+  padding-left: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.recall-text + .recall-text { margin-top: 18px; }
+
+.recall-attr {
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 2px;
+  margin-top: 18px;
+  padding-left: 36px;
+  text-transform: uppercase;
+}
+
+/* ========== 변화의 두 시선 ========== */
+.shift-grid {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  gap: 12px;
+  margin: 28px 0;
+  align-items: center;
+}
+
+.shift-then, .shift-now {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+}
+
+.shift-then { border-color: var(--ink-whisper); opacity: 0.85; }
+.shift-now { border-left: 3px solid var(--accent-feel); }
+
+.shift-label {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.shift-now .shift-label { color: var(--accent-feel); }
+
+.shift-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+.shift-arrow {
+  text-align: center;
+  font-size: 20px;
+  color: var(--ink-faint);
+  font-family: 'Noto Serif KR', serif;
+}
+
+/* ========== 마무리 박스 (02-B 연결) ========== */
+.bridge-box {
+  background: linear-gradient(135deg, #f5f1ea 0%, #faf8f4 100%);
+  border-radius: 16px;
+  padding: 36px 32px;
+  margin: 32px 0;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.bridge-mark {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ink-faint);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.bridge-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 14px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.bridge-text {
+  font-size: 14px;
+  color: var(--ink-light);
+  font-weight: 300;
+  line-height: 1.85;
+}
+
+.bridge-text strong { color: var(--ink); font-weight: 500; }
+
+/* ========== FOOTER ========== */
+.footer {
+  text-align: center;
+  margin-top: 72px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+  color: var(--ink-faint);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.footer .sign {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  color: var(--ink-light);
+  margin-bottom: 6px;
+}
+
+.copyright {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--bg-warm);
+  border-radius: 10px;
+  font-size: 11px;
+  color: var(--ink-light);
+  line-height: 1.8;
+  text-align: center;
+}
+
+.copyright strong {
+  color: var(--ink);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 640px) {
+  .container { padding: 32px 18px 60px; }
+  .header h1 { font-size: 24px; }
+  .header h1 .small { font-size: 15px; }
+  .section h2 { font-size: 20px; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .member-grid { grid-template-columns: 1fr; }
+  .diet-stages { grid-template-columns: 1fr; }
+  .shift-grid { grid-template-columns: 1fr; }
+  .shift-arrow { transform: rotate(90deg); padding: 4px 0; }
+  .week-row { grid-template-columns: 50px 1fr; gap: 10px; }
+  .recall-mark { font-size: 40px; left: 14px; }
+  .recall-text { padding-left: 24px; font-size: 15px; }
+}
+</style>
+</head>
+<body class="locked">
+
+<!-- ==================== 잠금 화면 ==================== -->
+<div id="lock-screen">
+  <div class="lock-inner">
+    <div class="lock-mark">선한인연 선한명상</div>
+    <div class="lock-title">회원 전용 자료</div>
+    <p class="lock-sub">
+      이 자료는 선한인연 선한명상 회원을 위한 자료입니다.<br>
+      안내받으신 비밀번호를 입력해주세요.
+    </p>
+    <div class="lock-input-wrap">
+      <input type="password" id="lock-input" class="lock-input" placeholder="비밀번호" autocomplete="off">
+      <button id="lock-btn" class="lock-btn">열기</button>
+    </div>
+    <div id="lock-error" class="lock-error"></div>
+    <div class="lock-note">
+      비밀번호를 모르시는 경우<br>선한인연 선한명상으로 문의해주세요 🙏
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ==================== HEADER ==================== -->
+<div class="header">
+  <div class="version">02</div>
+  <div class="header-badge">선한인연 기록 시리즈</div>
+  <h1>비움명상<span class="small">한 주의 여정, 7년의 기록</span></h1>
+  <p class="subtitle">— 함께 만들어온 시간을 기록하며 —</p>
+</div>
+
+<!-- ==================== TOC ==================== -->
+<nav class="toc">
+  <div class="toc-title">CONTENTS</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">01</span><a href="#s01">이 기록을 시작하며</a></div>
+    <div class="toc-item"><span class="toc-num">02</span><a href="#s02">비움명상이란</a></div>
+    <div class="toc-item"><span class="toc-num">03</span><a href="#s03">뿌리의 시간 — 2019~2021</a></div>
+    <div class="toc-item"><span class="toc-num">04</span><a href="#s04">1기의 형성 — 2022</a></div>
+    <div class="toc-item"><span class="toc-num">05</span><a href="#s05">7년의 진화 — 6단계</a></div>
+    <div class="toc-item"><span class="toc-num">06</span><a href="#s06">몸에서 마음으로</a></div>
+    <div class="toc-item"><span class="toc-num">07</span><a href="#s07">함께 걸어온 사람들</a></div>
+    <div class="toc-item"><span class="toc-num">08</span><a href="#s08">한 주의 여정</a></div>
+    <div class="toc-item"><span class="toc-num">09</span><a href="#s09">섭생의 길</a></div>
+    <div class="toc-item"><span class="toc-num">10</span><a href="#s10">기록자의 시선</a></div>
+    <div class="toc-item"><span class="toc-num">11</span><a href="#s11">같은 이름, 다른 깊이</a></div>
+    <div class="toc-item"><span class="toc-num">12</span><a href="#s12">새로운 챕터로</a></div>
+  </div>
+</nav>
+
+<!-- ==================== 01. 헌사 도입 ==================== -->
+<section class="section" id="s01">
+  <div class="section-number">01</div>
+  <h2>이 기록을 시작하며</h2>
+
+  <p>이 글을 시작하기까지 오래 망설였습니다. 비움명상은 하나의 프로그램이라기보다 7년의 시간 속에서 자라난 살아있는 흐름이라, <strong>그 결을 글로 옮기는 일이 쉽지 않았기 때문</strong>입니다.</p>
+
+  <p>그래도 기록으로 남겨야겠다고 생각한 이유가 있습니다. 함께해 오신 분들에게는 우리가 어떤 길을 걸어왔는지 한 번쯤 돌아보는 시간이 되시기를, 처음 만나시는 분들에게는 비움명상이 어떤 결을 가진 작업인지 미리 느껴보실 수 있기를 바라는 마음에서입니다.</p>
+
+  <div class="dedication">
+    <div class="dedication-mark">DEDICATION</div>
+    <div class="dedication-text">
+      이 기록은 선한인연 선한명상의 모든 회원께 보내는 글입니다.<br>
+      4년 동안 매달 같은 자리에 함께해 주신 1기 멤버께,<br>
+      그리고 비움명상을 처음 만나시는 모든 분께 — <br>
+      <strong>이 시간이 어떻게 만들어져 왔는지</strong>를 함께 나누고자 합니다.
+    </div>
+  </div>
+
+  <p>비움명상에 직접 함께해 오신 분께는 자신이 걸어온 길을 다시 바라보는 시간이 되시기를. 아직 만나지 못하신 분께는 7년의 깊이가 어떻게 쌓여왔는지 그 결을 느끼는 시간이 되시기를 바랍니다.</p>
+</section>
+
+<!-- ==================== 02. 비움명상이란 ==================== -->
+<section class="section" id="s02">
+  <div class="section-number">02</div>
+  <h2>비움명상이란</h2>
+
+  <p>비움명상은 단식이 아닙니다. 1박 2일의 이벤트도 아닙니다. <strong>금요일부터 다음 주 목요일까지, 한 주에 걸친 회복의 여정</strong>입니다.</p>
+
+  <p>3일은 비우고, 4일은 채웁니다. 그 사이에 1박 2일의 오프라인 집중 수련이 있고, 일주일 동안 카톡으로 일지와 코칭이 이어집니다. 비움은 끝나는 지점이 아니라 <strong>매달 돌아오는 회복의 리듬</strong>입니다.</p>
+
+  <div class="quote">
+    "섭생은 관찰입니다.<br>잘했고 못했고의 이분법이 아닙니다."
+    <em>비움명상의 7년이 다듬어온 한 마디</em>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">7<small>년</small></div>
+      <div class="stat-label">2019년부터 지속</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">67<small>+</small></div>
+      <div class="stat-label">진행된 회차</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">7<small>인</small></div>
+      <div class="stat-label">1기 멤버</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">매<small>달</small></div>
+      <div class="stat-label">돌아오는 리듬</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 03. 뿌리의 시간 ==================== -->
+<section class="section" id="s03">
+  <div class="section-number">03</div>
+  <h2>뿌리의 시간 — 2019~2021</h2>
+
+  <p>비움명상의 시작은 2019년이었습니다. 처음에는 <strong>정화·해독·순환을 위해 몸의 감각을 깨우는 작업</strong>으로 출발했습니다.</p>
+
+  <h3>밥을 먹지 않는다는 것</h3>
+  <p>그때만 해도 간헐적 단식이 유행하기 전이었습니다. <strong>밥을 먹지 않는다는 것에 대한 인식의 전환</strong>이 쉽지 않았던 시기였습니다. 첫 단계는 장청소 약을 통해 장을 비우는 것에서 시작되었습니다. 몸이 비워지기 시작하면 두통, 어지럼증, 짜증과 같은 다양한 명현반응이 따라왔고, 그 반응을 어떻게 풀어줄 것인가가 다음 과제가 되었습니다.</p>
+
+  <h3>물수행법과 산행법이 만들어진 자리</h3>
+  <p>그 과정에서 자연스럽게 <strong>물수행법</strong>과 <strong>산행법</strong>이 만들어졌습니다. 물이라는 에너지를 통해 몸을 열고, 산을 걸으며 정체된 기운을 풀어내는 길. 단순히 굶는 것이 아니라, 비우는 동안 일어나는 통증을 다스리고 풀어가는 작업이 정착된 시기였습니다.</p>
+
+  <p>그리고 그 위에 <strong>호흡 명상과 고강도 수련</strong>이 함께 얹어졌습니다. 비움이 단지 식사를 거르는 일이 아니라, 몸의 감각을 깨우고 다스리는 통합된 작업으로 자라기 시작한 자리입니다. 시간이 흐르며 물수행은 다시 <strong>염수수행법</strong>으로 발전했습니다. 염(鹽)이 가진 힘을 통해 정체된 에너지가 더 깊이 풀려나가는 길이었습니다.</p>
+
+  <p>이 시기에는 매번 모이는 분들이 달랐고, 한 사이클이 끝나면 흩어졌습니다. 그렇게 흘러간 3년 동안 자연스럽게 발견된 것이 있었습니다.</p>
+
+  <div class="key-concept">
+    <strong>뿌리 시기의 발견</strong>
+    <p>몸의 정화는 한 번의 경험으로 완성되지 않는다는 것. <strong>지속가능한 삶을 위한 고정적인 리듬</strong>이 필요하다는 것. 이 발견이 다음 챕터로 이어지는 다리가 되었습니다.</p>
+  </div>
+</section>
+
+<!-- ==================== 04. 1기의 형성 ==================== -->
+<section class="section" id="s04">
+  <div class="section-number">04</div>
+  <h2>1기의 형성 — 2022</h2>
+
+  <p>2022년, 비움명상은 새로운 챕터로 들어섭니다. 명상 아카데미를 운영하면서 함께 만나온 멤버십 회원분들 중 <strong>비움이 필요해 보이는 분들에게 권유</strong>를 드렸고, 그렇게 자연스럽게 첫 고정 멤버가 형성되었습니다.</p>
+
+  <h3>처음 함께한 분들</h3>
+  <p>처음 함께한 분은 네 분이었습니다 — 이수지님·이채연님·김장희님·지성은님. 이미 명상 아카데미에서 오래 수련해 오신 분들이었기에, 그분들의 몸과 마음의 흐름을 이미 알고 있었습니다. 비움명상이 처음부터 깊이 있게 시작될 수 있었던 이유입니다.</p>
+
+  <p>이후 오은주님이 합류하시며 1기 5인이 자리 잡았습니다. 그리고 시간이 흐르며 장지연님과 지영은님이 함께하시게 되어 1기는 7인이 되었습니다. <strong>모집해서 모인 분들이 아니라, 인연이 닿아 함께하시게 된 분들</strong>입니다.</p>
+
+  <h3>리듬을 찾아가는 시간</h3>
+  <p>처음에는 100일 수련처럼 3개월 흐름으로 진행되었습니다. 진행하다가 쉬기도 했습니다. 그렇게 호흡을 찾아가다가, <strong>매달 한 번 돌아오는 리듬</strong>이 가장 자연스럽다는 것을 함께 발견하게 되었습니다.</p>
+
+  <div class="key-concept feel">
+    <strong>왜 매달인가</strong>
+    <p>한 달이라는 시간은 몸이 한 번의 비움을 충분히 흡수하고, 일상의 리듬에 다시 적응하기에 적당한 길이입니다. 매달 돌아오는 비움은 일상에 <strong>회복의 닻</strong>을 만들어 줍니다. 너무 잦으면 부담이 되고, 너무 띄엄띄엄하면 리듬이 끊깁니다. 7년의 시도 끝에 자리 잡은 리듬입니다.</p>
+  </div>
+</section>
+
+<!-- ==================== 05. 7년의 진화 ==================== -->
+<section class="section" id="s05">
+  <div class="section-number">05</div>
+  <h2>7년의 진화</h2>
+
+  <p>비움명상은 한 자리에 머물지 않았습니다. 같은 이름 안에서 계속 깊어졌고, 매년 한 단계씩 자라났습니다. 7년의 흐름을 정리하면 다음과 같습니다.</p>
+
+  <div class="era-grid">
+
+    <div class="era-item era1">
+      <div class="era-period">PHASE 0 · 2019 ~ 2021</div>
+      <div class="era-title">뿌리의 시간</div>
+      <div class="era-keyword">정화 · 해독 · 순환</div>
+      <div class="era-desc">몸의 감각을 깨우는 작업이 출발점이었습니다. 이 시기에 <strong>물수행법과 산행법</strong>이 만들어졌고, 정화 중 일어나는 명현반응을 다스리는 길이 다듬어졌습니다. 호흡 명상과 고강도 수련이 얹어지고, 물수행은 다시 <strong>염수수행법</strong>으로 발전했습니다. <strong>지속가능한 리듬의 필요성</strong>이 발견된 시간.</div>
+    </div>
+
+    <div class="era-item era2">
+      <div class="era-period">PHASE 1 · 2022.02 ~ 04</div>
+      <div class="era-title">시작과 틀 만들기</div>
+      <div class="era-keyword">처음이지만 일단 해보자</div>
+      <div class="era-desc">"비움정화 프로그램 100일 정진"이라는 이름으로 1기가 시작되었습니다. 7일 연속 프로그램의 형식. 처음 함께하신 분들이 자신의 몸 안에서 일어나는 변화를 처음으로 만나신 시기.</div>
+    </div>
+
+    <div class="era-item era3">
+      <div class="era-period">PHASE 2 · 2022.07 ~ 11</div>
+      <div class="era-title">반복과 저항</div>
+      <div class="era-keyword">왜 자꾸 같은 데서 막히지?</div>
+      <div class="era-desc">섭생과 수련의 병행이 자리 잡고, 비움 후 1주일 회복 섭생 리듬이 시스템화되기 시작. 같은 자리에서 막히는 패턴을 함께 보면서, <strong>한 사이클이 아닌 반복의 시간</strong>이 필요함을 깨달은 시기. 비움이 단발이 아닌 매달의 리듬이 되어야 한다는 확신이 들었던 때입니다.</div>
+    </div>
+
+    <div class="era-item era4">
+      <div class="era-period">PHASE 3 · 2023.02 ~ 07</div>
+      <div class="era-title">까르마 직면</div>
+      <div class="era-keyword">이게 나였구나</div>
+      <div class="era-desc">섭생과 수련을 넘어 각자의 까르마를 직접 건드리는 나눔이 깊어진 시기. 음식 이야기에서 감정 이야기로, 감정 이야기에서 자기 패턴의 뿌리로 나눔의 결이 자연스럽게 깊어졌습니다. 이 흐름이 다음 단계의 변화를 예고했습니다.</div>
+    </div>
+
+    <div class="era-item era5">
+      <div class="era-period">PHASE 4 · 2023.09 ~ 2024.11</div>
+      <div class="era-title">마음의 결을 다루기 시작한 자리</div>
+      <div class="era-keyword">몸을 말하다 보니 마음이 보였다</div>
+      <div class="era-desc">이 시기 가장 큰 변화는 <strong>심경 수업이 비움명상 안으로 자연스럽게 자리 잡은 것</strong>이었습니다. 몸을 말하다 보면 자연스럽게 감정의 인식과 알아차림이 필요해졌고, 그 감정을 해석해줄 자리로 심경이 들어왔습니다. 비움이 마음의 결까지 다루는 작업으로 깊어진 결정적 시기.</div>
+    </div>
+
+    <div class="era-item era6">
+      <div class="era-period">PHASE 5 · 2025 ~ 현재</div>
+      <div class="era-title">언어의 성숙과 통합</div>
+      <div class="era-keyword">마음은 그저 하기 싫은 것이다</div>
+      <div class="era-desc">화두 코칭이 체계화되고, <strong>고강도 명상법</strong>으로 몸의 인지가 더 깊어지는 변화가 함께 따라왔습니다. 회원분들끼리 <strong>서로의 에너지를 흘려주는 에너지 세라피</strong>도 함께 익혀 나가는 단계로 확장되었습니다. 마음 코칭과 무의식 정화가 비움 안에서 통합된 시기.</div>
+    </div>
+
+  </div>
+
+  <div class="key-concept feel">
+    <strong>수련법의 성장</strong>
+    <p>물수행에서 염수수행으로, 일반 좌선에서 고강도 명상법으로, 혼자의 수련에서 서로 에너지를 흘려주는 세라피의 자리까지. <strong>수련법 자체가 7년 동안 함께 자라났습니다.</strong> 그래서 같은 이름의 비움명상이지만 7년 전과 지금은 같은 자리가 아닙니다.</p>
+  </div>
+</section>
+
+<!-- ==================== 06. 몸에서 마음의 몸으로 ==================== -->
+<section class="section" id="s06">
+  <div class="section-number">06</div>
+  <h2>몸에서 마음의 몸으로</h2>
+
+  <p>비움명상이 깊어진 가장 중요한 변화는 <strong>비중의 이동</strong>입니다. 처음에는 몸에 대한 비중이 컸습니다. 정화·해독·순환을 통해 몸의 감각을 깨우는 것이 작업의 중심이었습니다.</p>
+
+  <p>지금은 그 자리가 한 단계 깊어졌습니다. <strong>몸과 마음의 연결 구조를 알아차림하고 관찰하면서, 자신을 다스리는 힘을 키우는 작업</strong>으로 자라났습니다. 몸이 비움의 입구라면, 그 입구를 통해 들어가는 자리는 마음이 자리하고 있는 또 하나의 몸 — '마음의 몸'이었습니다.</p>
+
+  <h3>네 단계의 자연스러운 깊어짐</h3>
+  <p>비움명상이 마음의 결까지 다루는 작업으로 이어진 흐름을 정리하면 다음과 같습니다.</p>
+
+  <div class="key-concept">
+    <strong>1. 몸의 정화</strong>
+    <p>비움이 시작되면 몸이 먼저 비워집니다. 탁기가 빠지고 에너지가 자리를 찾아갑니다. 물수행과 염수수행이 그 길을 열어줍니다.</p>
+  </div>
+
+  <div class="key-concept feel">
+    <strong>2. 눈과 용기가 생김</strong>
+    <p>몸이 비워지자 마음을 들여다볼 <strong>눈과 용기</strong>가 생겼습니다. 이전에는 보이지 않던 자기의 패턴이, 외면해 온 감정의 결이 보이기 시작했습니다.</p>
+  </div>
+
+  <div class="key-concept mind">
+    <strong>3. 자기 직면의 힘</strong>
+    <p>에너지가 채워지니 자신을 <strong>직면할 힘</strong>이 생겼습니다. 외면해 왔던 감정들, 부정해 왔던 패턴들을 마주할 수 있는 자리가 열렸습니다.</p>
+  </div>
+
+  <div class="key-concept life">
+    <strong>4. 자기를 다스리는 힘</strong>
+    <p>몸과 마음의 연결 구조가 보이기 시작하면, 그것을 <strong>관찰하고 다스리는 힘</strong>이 자랍니다. 무의식의 결까지 정화되어 가는 작업이 비움명상 안에 자연스럽게 자리 잡았습니다.</p>
+  </div>
+
+  <h3>심경이 합류한 자리</h3>
+  <p>몸을 말하다 보면 자연스럽게 감정에 대한 인식이 필요해졌습니다. 음식 이야기 끝에 따라 올라오는 감정, 배고픔 안에 숨어 있는 불안, 절제 뒤에 있는 자기 비난. 이런 결들을 해석해 줄 자리가 필요했습니다.</p>
+
+  <p>그래서 <strong>심경 수업</strong>이 비움명상 안으로 자연스럽게 자리 잡았습니다. 비움이 단순한 단식이 아니라 <strong>음식을 매개로 자기 자신을 만나는 길</strong>이 된 결정적 변화였습니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      몸을 말하다 보면<br>
+      감정에 대한 부분의 인식과 알아차림이 필요해지고,<br>
+      이를 해석해주는 과정에서<br>
+      <strong>심경이 비움명상에 합류</strong>하게 되었습니다.
+    </div>
+    <div class="recall-attr">— 비움명상 7년의 발견</div>
+  </div>
+
+  <h3>비움명상이 다루는 마음 작업의 결</h3>
+  <p>비움명상에서 진행되는 마음 코칭과 무의식 정화는 <strong>몸과 마음을 분리하지 않는 통합 작업</strong>입니다. 몸을 도구로 마음을 다루는 것이 아니라, 몸 자체가 마음의 또 다른 표현임을 인식하는 자리에서 출발합니다.</p>
+
+  <div class="key-concept feel">
+    <strong>비움명상의 마음 작업이 가지는 깊이</strong>
+    <p>이 작업이 깊어지는 데에는 몇 가지 이유가 있습니다.</p>
+    <p style="margin-top:10px;">첫째, <strong>비움 중인 몸으로 들어가는 마음 작업</strong>이라는 점. 몸이 비워질 때 마음이 가장 선명하게 드러납니다. 일상의 포만감과 자극이 사라진 자리에 평소에는 보이지 않던 결이 떠오릅니다.</p>
+    <p>둘째, <strong>일주일 동안 이어지는 카톡 코칭</strong>이 있다는 점. 일회성이 아니라 한 주의 흐름 속에서 일지와 함께 흘러갑니다. 그 시간 안에 몸과 마음의 변화가 함께 잡힙니다.</p>
+    <p>셋째, <strong>매달 돌아오는 반복</strong>이 있다는 점. 깊이는 한 번에 만들어지지 않고 시간 속에서 쌓입니다. 매달 같은 자리에서 자기를 만나는 것 자체가 수련입니다.</p>
+    <p>넷째, <strong>4년간 함께 걸어 주신 분들이 만든 토양</strong>이 있다는 점. 새로 들어오시는 분께는 그 자리가 이미 깊은 토양으로 마련되어 있습니다.</p>
+  </div>
+</section>
+
+<!-- ==================== 07. 함께 걸어온 사람들 ==================== -->
+<section class="section" id="s07">
+  <div class="section-number">07</div>
+  <h2>함께 걸어온 사람들</h2>
+
+  <p>비움명상의 깊이는 한 사람이 만든 것이 아닙니다. <strong>매달 같은 자리에 함께 앉아 주신 분들</strong>이 함께 만든 것입니다. 4년 또는 그 이상을 함께해 온 1기 멤버 일곱 분의 시간을 한 페이지에 담는 것은 불가능하지만, 각자가 비움 안에서 마주한 자기와 몸의 변화를 한 자리에 모셔봅니다.</p>
+
+  <div class="member-grid">
+
+    <div class="member-card">
+      <div class="member-name">이수지님</div>
+      <div class="member-quote">"비움 중에 처음으로 딥슬립을 경험했습니다. 평생 새벽에 깨던 잠이 깊어졌습니다."</div>
+      <div class="member-arc">
+        <strong>몸의 변화</strong>로는 피부결이 맑아지고 체형이 젊어졌습니다. 주변에서 "10년은 어려 보인다"는 말을 자주 듣습니다. 평생 새벽에 깨던 잠이 비움 중에 <strong>딥슬립</strong>으로 바뀐 경험.<br><br>
+        <strong>마음의 결</strong>로는 돈에 대한 가식과 집착을 직면했고, "엄마의 고집이 내 고집임을 인정하지 못하는 것이 나의 고집"이라는 핵심 알아차림이 있었습니다. <strong>"나라는 인간이 꽤 괜찮다고 착각하며 살아왔다"</strong>는 자기 직면. 받아들임이 '그냥 다 받아들임'으로 깊어진 길입니다.
+      </div>
+    </div>
+
+    <div class="member-card">
+      <div class="member-name">이채연님</div>
+      <div class="member-quote">"화나면 먹고, 후회되니 토하고 — 이 악순환에서 벗어나고 싶어요."</div>
+      <div class="member-arc">
+        <strong>몸의 변화</strong>로는 5kg 이상 감량되었지만, 단순히 살이 빠진 것이 아니라 <strong>체형과 라인이 아름답게 바뀌었습니다</strong>. 끊어졌던 생리 주기가 다시 회복되는 변화도 함께 따라왔습니다.<br><br>
+        <strong>마음의 결</strong>로는 오랫동안 가지고 있던 폭식과 구토의 악순환을 처음으로 언어화하고 아빠에게 직접 고백했습니다. <strong>중고등학교 시절 가난과 결핍에서 비롯된 경제적 수치심의 뿌리</strong>를 비움 안에서 만나며, 사업의 결을 다시 잡아가는 길.
+      </div>
+    </div>
+
+    <div class="member-card">
+      <div class="member-name">김장희님</div>
+      <div class="member-quote">"내가 기억하는 아빠는 내 결핍이 만들어낸 상이었음이 명료해집니다."</div>
+      <div class="member-arc">
+        <strong>몸의 변화</strong>로는 건강검진에서 <strong>근골격이 좋아졌고, 호르몬약과 우울증약을 끊을 수 있게 되었습니다</strong>. 5kg 이상 감량되었고, 안 빠지던 하체살과 군살까지 자연스럽게 정리되었습니다.<br><br>
+        <strong>마음의 결</strong>로는 교사로 일하며 학교 안의 갈등 속에서도 수련을 놓지 않았습니다. 아버지의 60년대 일기를 읽으며 자신의 결핍이 만든 아버지상을 직면하고, <strong>도덕적 수치심과 미움받음에 대한 자기 고집</strong>까지 꿰뚫는 4년의 길.
+      </div>
+    </div>
+
+    <div class="member-card">
+      <div class="member-name">오은주님</div>
+      <div class="member-quote">"지금까지 내 마음이 진짜 괜찮은가 묻지 않고, 비교만 하며 살아왔어요."</div>
+      <div class="member-arc">
+        <strong>몸의 변화</strong>로는 강한 정화 반응으로 시작된 자리가 시간이 흐르며 안정된 회복의 흐름으로 자리 잡았습니다. <strong>결혼 전에 입던 옷이 다시 맞을 만큼</strong> 몸의 결이 가볍게 정돈되었습니다.<br><br>
+        <strong>마음의 결</strong>로는 "밑바닥을 본 것 같다"는 첫 나눔에서, "안 돼 안 돼 안 돼"로 자신을 계속 공격하던 패턴의 뿌리를 만났습니다. <strong>그동안 비움을 깊이 머물지 못한 채 적당히 걸쳐서 해 왔음</strong>을 직면한 후, 자기 공격이 자기 보호의 또 다른 모습이었음을 받아들이는 깊이까지 가는 길.
+      </div>
+    </div>
+
+    <div class="member-card">
+      <div class="member-name">지성은님</div>
+      <div class="member-quote">"기준의 주어가 부모가 아니라 '나'였다는 것 — 10년 만에 마음에 공간이 생겼습니다."</div>
+      <div class="member-arc">
+        <strong>몸의 변화</strong>로는 <strong>9kg가 감량</strong>되었고, 무엇보다 일어나기조차 힘들 정도였던 어깨 통증을 비롯한 <strong>만성 통증이 사라졌습니다</strong>. 발바닥 기감으로 처음 에너지를 만나신 자리에서, 몸의 깊은 회복까지 다다른 길.<br><br>
+        <strong>마음의 결</strong>로는 "기준을 세우고 달성할 때의 성취감이 부모님의 기대가 아닌 나의 기대였다"는 자리. 영상 집착의 뿌리에 부모 의존이 있었음을 직면하고, <strong>"나 진짜 어린아이였구나"</strong>를 마주한 4년의 시간.
+      </div>
+    </div>
+
+    <div class="member-card">
+      <div class="member-name">장지연님</div>
+      <div class="member-quote">"내 스스로가 마음에 들지 않는 마음이 그대로 엄마에게 투영되고 있음이 느껴집니다."</div>
+      <div class="member-arc">
+        <strong>몸의 변화</strong>로는 <strong>20년 동안 달고 살아온 소화 장애와 변비, 종아리 붓기가 풀려 나갔습니다</strong>. 오랜 세월 익숙해져 알아채지 못했던 몸의 부담이 비움 안에서 차츰 정돈되어 갔습니다.<br><br>
+        <strong>삶과 마음의 결</strong>로는 약국을 운영하며 동시에 <strong>어머니의 파킨슨과 치매를 돌보는 보호자의 자리</strong>로 들어선 시간. 어머니에게 향한 짜증과 닦달이 <strong>자기 자신을 향한 살기의 투영</strong>이었음을 만난 자리. 두 자리를 함께 살아 내며 자기를 정직하게 마주해 가는 길.
+      </div>
+    </div>
+
+  </div>
+
+  <h3>같은 자리에 함께 앉는 일</h3>
+  <p>4년 또는 그 이상을 매달 같은 자리에 앉는 일은 생각보다 쉽지 않습니다. 일이 바쁠 때, 몸이 힘들 때, 비움이 두려울 때 — 한 번쯤 거르고 싶은 마음이 누구에게나 있었습니다. 그래도 다시 앉으셨고, 다시 비우셨고, 다시 자기를 마주하셨습니다.</p>
+
+  <div class="member-fifth">
+    <strong>비움명상은 혼자의 수련이면서<br>
+    동시에 같은 자리에 함께 앉는 시간입니다.</strong><br>
+    한 사람의 나눔이 다른 분의 거울이 되고,<br>
+    그렇게 서로의 4년이 모여 깊이가 되었습니다.
+  </div>
+
+  <p>이채연님의 폭식 나눔이 이수지님의 알아차림을 깨우고, 지성은님의 부모 의존 이야기에 김장희님이 "내 얘기였다"고 하시는 장면들. 같은 자리에 앉아 본 사람들끼리만 알 수 있는 결이 4년 동안 쌓여 왔습니다. 새로 들어오시는 분께는 그 자리가 이미 깊은 토양이 되어 기다리고 있습니다.</p>
+</section>
+
+<!-- ==================== 08. 한 주의 여정 ==================== -->
+<section class="section" id="s08">
+  <div class="section-number">08</div>
+  <h2>한 주의 여정 — 7일 구조</h2>
+
+  <p>지금의 비움명상은 7일에 걸친 한 주의 여정입니다. 핵심 비움은 금요일 저녁부터 일요일 점심까지이지만, 회복 섭생과 코칭이 그 다음 목요일까지 이어집니다.</p>
+
+  <div class="week-timeline">
+
+    <div class="week-row">
+      <div class="week-day">
+        <div class="week-day-label">금</div>
+        <div class="week-day-eng">FRI</div>
+      </div>
+      <div class="week-content">
+        <span class="week-tag tag-empty">비움 시작</span>
+        점심에 든든한 한식으로 마무리한 후, <strong>저녁부터 소금레몬차로 전환</strong>합니다. 카톡으로 수련법과 섭생법이 안내되고, 일지 코칭이 시작됩니다.
+      </div>
+    </div>
+
+    <div class="week-row">
+      <div class="week-day">
+        <div class="week-day-label">토</div>
+        <div class="week-day-eng">SAT</div>
+      </div>
+      <div class="week-content">
+        <span class="week-tag tag-on">집중 수련</span>
+        오전은 집에서 명상과 물수행. 오후 <strong>3시에 명상관에 도착</strong>하여 1박 2일 집중 수련이 시작됩니다.
+      </div>
+    </div>
+
+    <div class="week-row">
+      <div class="week-day">
+        <div class="week-day-label">일</div>
+        <div class="week-day-eng">SUN</div>
+      </div>
+      <div class="week-content">
+        <span class="week-tag tag-on">집중 수련</span><span class="week-tag tag-recover">회복 시작</span>
+        오전 수련 + 마음 코칭 후 <strong>오후 2시 마무리</strong>. 첫 식사는 회원분 한 분 한 분의 몸 상태를 살펴 개별 처방됩니다.
+      </div>
+    </div>
+
+    <div class="week-row">
+      <div class="week-day">
+        <div class="week-day-label">월</div>
+        <div class="week-day-eng">MON</div>
+      </div>
+      <div class="week-content">
+        <span class="week-tag tag-recover">회복 섭생</span>
+        오전 소금차, 점심 한식 소식, 저녁 소식. 일지 코칭이 카톡으로 이어집니다.
+      </div>
+    </div>
+
+    <div class="week-row">
+      <div class="week-day">
+        <div class="week-day-label">화</div>
+        <div class="week-day-eng">TUE</div>
+      </div>
+      <div class="week-content">
+        <span class="week-tag tag-recover">회복 섭생</span>
+        같은 리듬 유지. 몸 반응이 가장 선명하게 올라오는 날이기도 합니다.
+      </div>
+    </div>
+
+    <div class="week-row">
+      <div class="week-day">
+        <div class="week-day-label">수</div>
+        <div class="week-day-eng">WED</div>
+      </div>
+      <div class="week-content">
+        <span class="week-tag tag-recover">회복 섭생</span>
+        몸이 새로운 리듬에 적응합니다. 일지에 변화가 보이기 시작합니다.
+      </div>
+    </div>
+
+    <div class="week-row">
+      <div class="week-day">
+        <div class="week-day-label">목</div>
+        <div class="week-day-eng">THU</div>
+      </div>
+      <div class="week-content">
+        <span class="week-tag tag-recover">회복 마무리</span>
+        한 주의 코칭이 마무리됩니다. 다음 비움까지 이 리듬을 일상으로 가져갑니다.
+      </div>
+    </div>
+
+  </div>
+
+  <h3>1박 2일 — 명상관에서의 핵심 시간</h3>
+  <p>한 주의 중심에 1박 2일의 오프라인 집중 시간이 있습니다.</p>
+
+  <div class="key-concept">
+    <strong>토요일 (1일차)</strong>
+    <p><strong>오후 3시 명상관 도착</strong> → 15:00~18:00 집중 수련 (정심경·삼일심경·고관절 무한대·염수행) → 19:00~21:00 마음 코칭, 심경을 통해 비움 중에 드러난 자기를 만나는 시간 → 1박</p>
+  </div>
+
+  <div class="key-concept feel">
+    <strong>일요일 (2일차)</strong>
+    <p>10:00~12:00 오전 수련 → 12:00~14:00 마음 코칭과 마무리 → <strong>오후 2시 첫 식사</strong>. 오프라인은 마무리되지만, 회복 섭생과 카톡 코칭은 다음 목요일까지 이어집니다.</p>
+  </div>
+</section>
+
+<!-- ==================== 09. 섭생의 길 ==================== -->
+<section class="section" id="s09">
+  <div class="section-number">09</div>
+  <h2>섭생의 길</h2>
+
+  <p>비움명상에서 섭생은 단순한 식사 제한이 아닙니다. <strong>음식을 통해 자기 자신을 관찰하는 길</strong>입니다.</p>
+
+  <div class="diet-stages">
+
+    <div class="diet-stage-card">
+      <div class="diet-stage-num">1</div>
+      <div class="diet-stage-title">비움 들어가기 전</div>
+      <div class="diet-stage-desc">목요일은 평소처럼. 금요일 점심은 단백질·지방·야채가 균형 잡힌 든든한 한식. 갑자기 줄이면 오히려 식욕 폭발로 이어집니다.</div>
+    </div>
+
+    <div class="diet-stage-card">
+      <div class="diet-stage-num">2</div>
+      <div class="diet-stage-title">비움 중</div>
+      <div class="diet-stage-desc">금요일 저녁 ~ 일요일 점심까지 약 40시간. 소금레몬차 (아침·점심·저녁)와 물만 허용. 배고픔이 올라오면 그 안에 머무르는 관찰의 자리.</div>
+    </div>
+
+    <div class="diet-stage-card">
+      <div class="diet-stage-num">3</div>
+      <div class="diet-stage-title">비움 후 회복</div>
+      <div class="diet-stage-desc">첫 식사는 회원분 한 분 한 분의 몸 상태를 살펴 개별 처방됩니다. 월~목 회복 섭생. 오전 소금차, 점심 한식 소식. 비움의 리듬을 일상으로.</div>
+    </div>
+
+  </div>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      배고픔은 불편함이 아니라<br>
+      <strong>몸이 스스로를 돌보는 신호</strong>입니다.<br>
+      배고픔 자체보다 <strong>배고픔을 참지 못하는 나 자신</strong>이<br>
+      싫은 것일 때가 많습니다.
+    </div>
+    <div class="recall-attr">— 비움 중 핵심 코칭 언어</div>
+  </div>
+
+  <p>이 세 단계의 흐름을 일주일 동안 카톡 일지로 함께 이어갑니다. <strong>혼자 견디는 단식이 아니라, 매일의 일지 코칭과 함께 가는 한 주</strong>입니다.</p>
+</section>
+
+<!-- ==================== 10. 기록자의 시선 ==================== -->
+<section class="section" id="s10">
+  <div class="section-number">10</div>
+  <h2>지나온 7년을 돌아보며</h2>
+
+  <p>이 자리까지 오는 동안 본 7년에 대해 적어 봅니다. 회원분들의 변화를 옆에서 함께 걸어온 사람으로서, 그리고 같이 자라 온 한 사람으로서.</p>
+
+  <h3>비움이 가르쳐 준 것</h3>
+
+  <p>비움명상을 시작했을 때만 해도 이 작업이 어디까지 갈지 몰랐습니다. 처음에는 몸의 정화가 전부일 줄 알았습니다. 그런데 시간이 지나면서 알게 되었습니다. <strong>몸이 비워지면 마음이 보이고, 마음이 보이면 무의식이 드러난다</strong>는 것을. 비움이 가르쳐 준 길이었습니다.</p>
+
+  <p>그 길은 한 사람이 만든 것이 아닙니다. 함께 걸어 주신 회원분들이 매달 자신의 자리에서 마주하신 진실들이 모여, 비움명상을 지금의 자리로 데려다 놓았습니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      비움은 단지 음식을 비우는 것이 아니었습니다.<br><br>
+
+      <strong>몸이 비워지면 마음이 드러나고,<br>
+      마음이 드러나면 무의식이 보이고,<br>
+      그 무의식까지 정화될 때<br>
+      삶의 결이 달라집니다.</strong>
+    </div>
+    <div class="recall-attr">— 시아님 · 7년이 가르쳐 준 것</div>
+  </div>
+
+  <h3>코칭의 결이 깊어진 시간</h3>
+
+  <p>처음에는 보이는 것을 빨리 전해 드리고 싶은 마음이 컸습니다. 회원분의 패턴이 보이면 그것을 정확히 짚어 드리고 싶었습니다. 그런데 시간이 가르쳐 준 것이 있습니다.</p>
+
+  <p><strong>보이는 것을 그대로 전하는 것보다, 그분이 스스로 보실 수 있도록 자리를 마련해 드리는 것이 진짜 코칭이라는 것</strong>을. 그래서 점점 더 낮아지게 되었고, 점점 더 기다리는 사람이 되어 갔습니다. 회원분들의 미움과 오해도 함께 받으며, 그 시간이 더 깊은 자리로 데려다 놓았습니다.</p>
+
+  <p>이 길에서 관장님이 늘 짚어 주시던 한마디가 있습니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      이분에게 보이는 것을<br>
+      어떻게 걸림 없이 전해 드릴 수 있을까.<br>
+      그 마음을 따라 안으로 자꾸 들어가다 보니<br>
+      미움과 오해도 함께 받게 되었습니다.<br><br>
+
+      <strong>그러니 더 낮아질 수밖에 없겠구나.<br>
+      더 깊어지는 곳으로 가는 것이<br>
+      길이겠구나.</strong>
+    </div>
+    <div class="recall-attr">— 박선정 관장님</div>
+  </div>
+
+  <h3>관장님의 시선</h3>
+  <p>박선정 관장님은 7년의 시간을 이렇게 정리하셨습니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      서로가 서로를 바라보는 눈빛이 달라지잖아요.<br>
+      <strong>눈빛, 그 에너지를 받는 거예요.</strong><br>
+      이 사람이 나를 바라보는 그 눈빛 하나에서<br>
+      존재감이 살아나면 다 녹더라고요.
+    </div>
+    <div class="recall-text">
+      갈등이 지나면 더 깊어져요.<br>
+      함께 겪어나가다 보니 그게 굉장히 행복하더라고요.
+    </div>
+    <div class="recall-attr">— 박선정 관장님</div>
+  </div>
+
+  <h3>이 자리에서 다시 시작합니다</h3>
+
+  <p>비움명상은 7년 동안 같은 이름을 가지고 있었지만, 같은 프로그램은 아니었습니다. 매년 한 단계씩 깊어졌고, 회원분들과 함께 자라 왔습니다. 1기 멤버가 만들어 주신 토양 위에 2기가 새롭게 뿌리를 내리는 시간이 시작됩니다.</p>
+
+  <p>이 길을 함께 걸어 주신 모든 분께 깊이 감사드립니다. 같은 자리에서 다시 시작하겠습니다.</p>
+</section>
+
+<!-- ==================== 11. 같은 이름, 다른 깊이 ==================== -->
+<section class="section" id="s11">
+  <div class="section-number">11</div>
+  <h2>같은 이름, 다른 깊이</h2>
+
+  <p>비움명상은 7년 동안 같은 이름이었습니다. 그러나 같은 프로그램은 아닙니다.</p>
+
+  <div class="shift-grid">
+    <div class="shift-then">
+      <div class="shift-label">처음 (2019)</div>
+      <div class="shift-text">음식을 비우는 것이 목적</div>
+    </div>
+    <div class="shift-arrow">→</div>
+    <div class="shift-now">
+      <div class="shift-label">지금 (2026)</div>
+      <div class="shift-text">음식을 통해 자기를 보는 것이 목적</div>
+    </div>
+  </div>
+
+  <div class="shift-grid">
+    <div class="shift-then">
+      <div class="shift-label">처음의 나눔</div>
+      <div class="shift-text">"오늘 뭘 먹었는지"</div>
+    </div>
+    <div class="shift-arrow">→</div>
+    <div class="shift-now">
+      <div class="shift-label">지금의 나눔</div>
+      <div class="shift-text">"왜 그것을 먹고 싶었는지, 그 안에 어떤 감정이 있었는지"</div>
+    </div>
+  </div>
+
+  <div class="shift-grid">
+    <div class="shift-then">
+      <div class="shift-label">처음의 작업</div>
+      <div class="shift-text">몸의 정화·해독</div>
+    </div>
+    <div class="shift-arrow">→</div>
+    <div class="shift-now">
+      <div class="shift-label">지금의 작업</div>
+      <div class="shift-text">몸의 정화 + 마음의 정화 + 무의식 정화</div>
+    </div>
+  </div>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      처음에는 비움을 할 때<br>
+      무조건 다 비우는 데에 무게가 있었습니다.<br>
+      장청소를 해서 비우고, 2~3일을 비우고 —<br>
+      그렇게 갔지요.<br>
+      지금은 아닙니다.
+    </div>
+    <div class="recall-text">
+      지금은 <strong>내가 내 음식을 받아들이는 나의 알아차림</strong>,<br>
+      그것이 중요합니다.<br>
+      내 몸을 조금 해석해 보고<br>
+      내 몸을 바라볼 수 있는 힘이 좀 더 열려 있어야 하고.<br>
+      그래서 <strong>열린 알아차림</strong>이 가장 중요합니다.
+    </div>
+    <div class="recall-attr">— 시아님 · 비움명상이 자라온 길</div>
+  </div>
+
+  <p>이것이 7년이 만든 가장 큰 변화입니다. 음식을 비우는 행위가 음식을 통해 자기를 만나는 길이 되었습니다. <strong>같은 이름, 다른 깊이</strong>입니다.</p>
+</section>
+
+<!-- ==================== 12. 새로운 챕터로 ==================== -->
+<section class="section" id="s12">
+  <div class="section-number">12</div>
+  <h2>새로운 챕터로</h2>
+
+  <p>지금까지의 7년이 1기의 시간이었습니다. <strong>1기 멤버 일곱 분이 매달 같은 자리에 앉아 함께 만들어 주신 시간</strong>. 그 자리들이 비움명상의 뿌리가 되었습니다.</p>
+
+  <p>이제 비움명상은 새로운 챕터로 나아갑니다. 1기가 뿌리를 내린 시간이었다면, 2기는 그 뿌리에서 자라난 것들이 더 많은 분께 닿는 시간이 됩니다.</p>
+
+  <div class="bridge-box">
+    <div class="bridge-mark">NEXT CHAPTER</div>
+    <div class="bridge-title">
+      비움명상 1기 · 2기 운영이 시작됩니다
+    </div>
+    <div class="bridge-text">
+      함께 깊이를 만들어 주신 1기 멤버와<br>
+      새롭게 비움을 시작하시는 2기.<br>
+      <strong>두 자리, 같은 비움.</strong><br><br>
+      자세한 내용은 <strong>02-B 자료 「비움명상 1기·2기 운영 안내」</strong>에서 만나보실 수 있습니다.
+    </div>
+  </div>
+
+  <div class="quote">
+    "한 달에 한 번 돌아오는 한 주,<br>
+    그 안에서 회복은 리듬이 됩니다"
+    <em>비움명상 7년이 다듬어 준 한 마디</em>
+  </div>
+
+  <p>이 기록을 끝까지 읽어 주신 회원분께 감사드립니다. 7년간 함께 걸어 주신 1기 멤버분들께 마음 깊이 감사드립니다. 이 시간이 더 많은 분께 닿기를, 함께 만들어 가는 자리가 되기를 바랍니다.</p>
+
+  <p>같은 자리에서 함께 걸어 가겠습니다. 🙏</p>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<div class="footer">
+  <div class="sign">선한인연 선한명상</div>
+  <div>비움명상 · 한 주의 여정, 7년의 기록 · 02 · 2026.04</div>
+
+  <div class="copyright">
+    <strong>© 2026 선한인연 선한명상 · All rights reserved</strong>
+    본 자료는 선한인연 선한명상 회원을 위해 제작된 자료입니다.<br>
+    무단 전재 · 복제 · 재배포 · 2차 가공 · 외부 공유를 금합니다.<br>
+    문의: 선한인연 선한명상 (서울 광진구 광장동)
+  </div>
+</div>
+
+</div>
+
+<script>
+  const PASSWORD = "sunhan2026";
+
+  try {
+    if (sessionStorage.getItem('sunhan_unlocked') === 'yes') {
+      document.body.classList.remove('locked');
+      document.body.classList.add('unlocked');
+    }
+  } catch(e) {}
+
+  function tryUnlock() {
+    const input = document.getElementById('lock-input');
+    const err = document.getElementById('lock-error');
+    if (input.value === PASSWORD) {
+      document.body.classList.remove('locked');
+      document.body.classList.add('unlocked');
+      try { sessionStorage.setItem('sunhan_unlocked', 'yes'); } catch(e) {}
+    } else {
+      err.textContent = '비밀번호가 맞지 않습니다.';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  document.getElementById('lock-btn').addEventListener('click', tryUnlock);
+  document.getElementById('lock-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryUnlock();
+  });
+
+  window.addEventListener('load', function() {
+    if (document.body.classList.contains('locked')) {
+      document.getElementById('lock-input').focus();
+    }
+  });
+
+  document.querySelectorAll('.toc-item a').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
