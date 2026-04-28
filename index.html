@@ -583,13 +583,40 @@ body.unlocked #lock-screen { display: none; }
 <script>
   // 비밀번호
   const PASSWORD = "sunhan2026";
+  const STORAGE_KEY = "sunhan_unlocked";
+  const EXPIRY_DAYS = 30;
 
-  try {
-    if (sessionStorage.getItem('sunhan_unlocked') === 'yes') {
-      document.body.classList.remove('locked');
-      document.body.classList.add('unlocked');
-    }
-  } catch(e) {}
+  // 만료 여부 확인 (30일)
+  function isUnlocked() {
+    try {
+      const data = localStorage.getItem(STORAGE_KEY);
+      if (!data) return false;
+      const parsed = JSON.parse(data);
+      if (!parsed.timestamp) return false;
+      const elapsed = Date.now() - parsed.timestamp;
+      const expiry = EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+      if (elapsed > expiry) {
+        localStorage.removeItem(STORAGE_KEY);
+        return false;
+      }
+      return parsed.unlocked === true;
+    } catch(e) { return false; }
+  }
+
+  function setUnlocked() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        unlocked: true,
+        timestamp: Date.now()
+      }));
+    } catch(e) {}
+  }
+
+  // 페이지 로드 시 자동 잠금 해제 확인
+  if (isUnlocked()) {
+    document.body.classList.remove('locked');
+    document.body.classList.add('unlocked');
+  }
 
   function tryUnlock() {
     const input = document.getElementById('lock-input');
@@ -597,7 +624,7 @@ body.unlocked #lock-screen { display: none; }
     if (input.value === PASSWORD) {
       document.body.classList.remove('locked');
       document.body.classList.add('unlocked');
-      try { sessionStorage.setItem('sunhan_unlocked', 'yes'); } catch(e) {}
+      setUnlocked();
     } else {
       err.textContent = '비밀번호가 맞지 않습니다.';
       input.value = '';

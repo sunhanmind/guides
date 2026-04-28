@@ -1181,7 +1181,7 @@ body.unlocked #lock-screen { display: none; }
       <div class="eight-time">18:00 ~ 22:00</div>
       <div class="eight-content">
         <div class="eight-title">마음 코칭 — 심경 (4시간)</div>
-        <div class="eight-desc">하루 동안 올라온 몸과 마음의 흐름을 함께 나눕니다. 심경(心鏡)을 통해 비움 중에 드러난 자기를 만나는 시간입니다. 오프라인의 가장 깊은 자리입니다.</div>
+        <div class="eight-desc">하루 동안 올라온 몸과 마음의 흐름을 함께 나눕니다. 심경을 통해 비움 중에 드러난 자기를 만나는 시간입니다. 오프라인의 가장 깊은 자리입니다.</div>
       </div>
     </div>
 
@@ -1487,13 +1487,38 @@ body.unlocked #lock-screen { display: none; }
 
 <script>
   const PASSWORD = "sunhan2026";
+  const STORAGE_KEY = "sunhan_unlocked";
+  const EXPIRY_DAYS = 30;
 
-  try {
-    if (sessionStorage.getItem('sunhan_unlocked') === 'yes') {
-      document.body.classList.remove('locked');
-      document.body.classList.add('unlocked');
-    }
-  } catch(e) {}
+  function isUnlocked() {
+    try {
+      const data = localStorage.getItem(STORAGE_KEY);
+      if (!data) return false;
+      const parsed = JSON.parse(data);
+      if (!parsed.timestamp) return false;
+      const elapsed = Date.now() - parsed.timestamp;
+      const expiry = EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+      if (elapsed > expiry) {
+        localStorage.removeItem(STORAGE_KEY);
+        return false;
+      }
+      return parsed.unlocked === true;
+    } catch(e) { return false; }
+  }
+
+  function setUnlocked() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        unlocked: true,
+        timestamp: Date.now()
+      }));
+    } catch(e) {}
+  }
+
+  if (isUnlocked()) {
+    document.body.classList.remove('locked');
+    document.body.classList.add('unlocked');
+  }
 
   function tryUnlock() {
     const input = document.getElementById('lock-input');
@@ -1501,7 +1526,7 @@ body.unlocked #lock-screen { display: none; }
     if (input.value === PASSWORD) {
       document.body.classList.remove('locked');
       document.body.classList.add('unlocked');
-      try { sessionStorage.setItem('sunhan_unlocked', 'yes'); } catch(e) {}
+      setUnlocked();
     } else {
       err.textContent = '비밀번호가 맞지 않습니다.';
       input.value = '';
