@@ -137,6 +137,33 @@ body.unlocked #lock-screen { display: none; }
   letter-spacing: 0.5px;
 }
 
+/* ========== BACK LINK ========== */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  padding: 6px 12px 6px 0;
+  transition: color 0.2s, transform 0.2s;
+}
+.back-link:hover {
+  color: var(--ink);
+}
+.back-link:hover .back-arrow {
+  transform: translateX(-3px);
+}
+.back-arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 14px;
+}
+
 /* ========== HEADER ========== */
 .header {
   text-align: center;
@@ -969,6 +996,12 @@ body.unlocked #lock-screen { display: none; }
 </div>
 
 <div class="container">
+
+<!-- ==================== BACK LINK ==================== -->
+<a href="../" class="back-link">
+  <span class="back-arrow">←</span>
+  <span>회원 자료실</span>
+</a>
 
 <!-- ==================== HEADER ==================== -->
 <div class="header">
