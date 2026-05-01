@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ═══════════════════════════════════════════════════════════
+     【 자료 정보 — 새 자료 만들 때 수정 】
+     1. <title> 태그 안 자료명 변경
+     2. 헤더 부분 (.version, .header-badge, h1, .subtitle) 변경
+     3. 본문 섹션 추가 (Section 01부터 시작)
+     ═══════════════════════════════════════════════════════════ -->
+
+<title>선한인연 선한명상 — 정기신(精氣神) 심화 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   선한인연 선한명상 디자인 시스템
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  /* 배경 */
+  --bg: #faf8f4;
+  --bg-warm: #f5f1ea;
+  --bg-card: #ffffff;
+
+  /* 잉크(텍스트) */
+  --ink: #2c2a26;
+  --ink-light: #6b6560;
+  --ink-faint: #a09890;
+  --ink-whisper: #c9c2ba;
+
+  /* 4자리 컬러 (몸·느낌·마음·삶) */
+  --accent-body: #c5785c;   /* 몸 - 따뜻한 황토 */
+  --accent-feel: #7a9e7e;   /* 느낌 - 차분한 녹색 */
+  --accent-mind: #6882a8;   /* 마음 - 깊은 파랑 */
+  --accent-life: #9b7bb8;   /* 삶 - 절제된 보라 */
+  --accent-new:  #c4956a;   /* 새 챕터용 */
+
+  /* 정기신 컬러 (심화 자료용) */
+  --accent-jung: #c5785c;   /* 精 = 정 */
+  --accent-gi:   #7a9e7e;   /* 氣 = 기 */
+  --accent-shin: #6882a8;   /* 神 = 신 */
+
+  /* 경계선 */
+  --border: #e8e2da;
+  --border-soft: #efe9e0;
+
+  /* 그림자 */
+  --shadow: rgba(44,42,38,0.06);
+  --shadow-deep: rgba(44,42,38,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.85;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 잠금 화면 활성화 */
+body.locked { overflow: hidden; }
+body.unlocked #lock-screen { display: none; }
+
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   잠금 화면 (통합 시스템)
+   ═══════════════════════════════════════════════════════════ */
+
+#lock-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+}
+
+.lock-inner {
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.lock-mark {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.lock-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.4;
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+}
+
+.lock-sub {
+  font-size: 13px;
+  color: var(--ink-light);
+  font-weight: 300;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.lock-input-wrap { display: flex; gap: 8px; margin-bottom: 16px; }
+
+.lock-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.lock-input:focus { border-color: var(--accent-mind); }
+
+.lock-btn {
+  padding: 14px 24px;
+  border: none;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+.lock-btn:hover { opacity: 0.85; }
+
+.lock-error {
+  font-size: 12px;
+  color: var(--accent-body);
+  min-height: 18px;
+  margin-top: 4px;
+}
+
+.lock-note {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--ink-faint);
+  line-height: 1.7;
+  letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   돌아가기 링크
+   ═══════════════════════════════════════════════════════════ */
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  padding: 6px 12px 6px 0;
+  transition: color 0.2s, transform 0.2s;
+}
+.back-link:hover { color: var(--ink); }
+.back-link:hover .back-arrow { transform: translateX(-3px); }
+.back-arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   헤더
+   ═══════════════════════════════════════════════════════════ */
+
+.header {
+  text-align: center;
+  margin-bottom: 64px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--border);
+}
+
+.version {
+  display: inline-block;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--ink-faint);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.header-badge {
+  display: inline-block;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ink-faint);
+  border: 1px solid var(--border);
+  padding: 6px 20px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 38px;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.header h1 .small {
+  display: block;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink-light);
+  margin-top: 12px;
+  letter-spacing: 0;
+}
+
+.header .subtitle {
+  color: var(--ink-light);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   목차 (TOC)
+   ═══════════════════════════════════════════════════════════ */
+
+.toc {
+  background: var(--bg-warm);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-bottom: 56px;
+}
+
+.toc-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.toc-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 24px;
+}
+
+.toc-item a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink-light);
+  font-size: 13px;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+.toc-item a:hover { color: var(--ink); }
+
+.toc-num {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 1px;
+  min-width: 20px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   섹션
+   ═══════════════════════════════════════════════════════════ */
+
+.section {
+  margin-bottom: 80px;
+}
+
+.section-number {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ink-faint);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.section h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 1.4;
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+.section h3 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.5;
+  margin: 36px 0 16px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.section p {
+  margin-bottom: 18px;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.section p strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   콘텐츠 블록 — Key Concept (핵심 개념 박스)
+   ═══════════════════════════════════════════════════════════ */
+
+.key-concept {
+  background: var(--bg-card);
+  border-left: 3px solid var(--accent-body);
+  border-radius: 4px 14px 14px 4px;
+  padding: 22px 28px;
+  margin: 28px 0;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.key-concept.feel { border-left-color: var(--accent-feel); }
+.key-concept.mind { border-left-color: var(--accent-mind); }
+.key-concept.life { border-left-color: var(--accent-life); }
+.key-concept.new  { border-left-color: var(--accent-new); }
+
+.key-concept strong {
+  display: block;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+.key-concept p {
+  margin-bottom: 0;
+  font-size: 14px;
+  color: var(--ink-light);
+  font-weight: 300;
+  line-height: 1.85;
+}
+
+.key-concept p strong {
+  display: inline;
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   콘텐츠 블록 — Recall Box (인용·회고 박스)
+   ═══════════════════════════════════════════════════════════ */
+
+.recall-box {
+  position: relative;
+  background: var(--bg-warm);
+  border-radius: 14px;
+  padding: 36px 40px 28px;
+  margin: 36px 0;
+}
+
+.recall-mark {
+  position: absolute;
+  top: 12px;
+  left: 24px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 48px;
+  color: var(--ink-whisper);
+  line-height: 1;
+}
+
+.recall-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.85;
+  margin-bottom: 14px;
+}
+
+.recall-text strong {
+  font-weight: 700;
+}
+
+.recall-attr {
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 2px;
+  text-align: right;
+  font-family: 'Noto Serif KR', serif;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   콘텐츠 블록 — Quote (큰 인용)
+   ═══════════════════════════════════════════════════════════ */
+
+.quote {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.7;
+  text-align: center;
+  padding: 40px 24px;
+  margin: 40px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  letter-spacing: -0.01em;
+}
+
+.quote em {
+  display: block;
+  font-style: normal;
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-top: 16px;
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   콘텐츠 블록 — Bridge Box (연결 안내 박스)
+   ═══════════════════════════════════════════════════════════ */
+
+.bridge-box {
+  background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-card) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 36px;
+  margin: 40px 0;
+  text-align: center;
+}
+
+.bridge-mark {
+  display: inline-block;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--accent-mind);
+  margin-bottom: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.bridge-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+
+.bridge-text {
+  font-size: 13px;
+  color: var(--ink-light);
+  font-weight: 300;
+  line-height: 1.85;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   풋터
+   ═══════════════════════════════════════════════════════════ */
+
+.footer {
+  text-align: center;
+  margin-top: 80px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+  color: var(--ink-faint);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.footer .sign {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  color: var(--ink-light);
+  margin-bottom: 6px;
+}
+
+.copyright {
+  margin-top: 24px;
+  padding: 18px;
+  background: var(--bg-warm);
+  border-radius: 10px;
+  font-size: 11px;
+  color: var(--ink-light);
+  line-height: 1.8;
+  text-align: center;
+}
+
+.copyright strong {
+  color: var(--ink);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   모바일 반응형
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+  .container { padding: 36px 18px 60px; }
+  .header h1 { font-size: 26px; }
+  .section h2 { font-size: 22px; }
+  .section h3 { font-size: 16px; }
+  .toc-list { grid-template-columns: 1fr; }
+  .recall-box { padding: 28px 22px 22px; }
+  .recall-mark { left: 14px; font-size: 36px; }
+  .quote { font-size: 17px; padding: 28px 16px; }
+  .key-concept { padding: 18px 20px; }
+  .bridge-box { padding: 24px 22px; }
+}
+</style>
+</head>
+<body class="locked">
+
+<!-- ═══════════════════════════════════════════════════════════
+     잠금 화면 (수정 불필요)
+     ═══════════════════════════════════════════════════════════ -->
+<div id="lock-screen">
+  <div class="lock-inner">
+    <div class="lock-mark">선한인연 선한명상</div>
+    <div class="lock-title">회원 전용 자료</div>
+    <p class="lock-sub">
+      이 자료는 선한인연 선한명상 회원을 위한 자료입니다.<br>
+      안내받으신 비밀번호를 입력해주세요.
+    </p>
+    <div class="lock-input-wrap">
+      <input type="password" id="lock-input" class="lock-input" placeholder="비밀번호" autocomplete="off">
+      <button id="lock-btn" class="lock-btn">열기</button>
+    </div>
+    <div id="lock-error" class="lock-error"></div>
+    <div class="lock-note">
+      비밀번호를 모르시는 경우<br>선한인연 선한명상으로 문의해주세요 🙏
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════════════════
+     돌아가기 링크 (수정 불필요)
+     ═══════════════════════════════════════════════════════════ -->
+<a href="../" class="back-link">
+  <span class="back-arrow">←</span>
+  <span>회원 자료실</span>
+</a>
+
+<!-- ═══════════════════════════════════════════════════════════
+     【 헤더 】
+     ═══════════════════════════════════════════════════════════ -->
+<div class="header">
+  <div class="version">GUIDE 03</div>
+  <div class="header-badge">선한인연 심화 시리즈</div>
+  <h1>정기신(精氣神)<span class="small">몸·에너지·마음을 잇는 수련의 큰 지도</span></h1>
+  <p class="subtitle">— 선한인연 선한명상 수련의 본질을 만나며 —</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     목차
+     ═══════════════════════════════════════════════════════════ -->
+<nav class="toc">
+  <div class="toc-title">CONTENTS</div>
+  <ul class="toc-list">
+    <li class="toc-item"><a href="#s01"><span class="toc-num">01</span><span>들어가며 — 왜 정기신인가</span></a></li>
+    <li class="toc-item"><a href="#s02"><span class="toc-num">02</span><span>정기신(精氣神) — 세 글자가 가리키는 자리</span></a></li>
+    <li class="toc-item"><a href="#s03"><span class="toc-num">03</span><span>4자리와 정기신의 만남 — 큰 지도</span></a></li>
+    <li class="toc-item"><a href="#s04"><span class="toc-num">04</span><span>精(정) — 몸의 자리</span></a></li>
+    <li class="toc-item"><a href="#s05"><span class="toc-num">05</span><span>氣(기) — 에너지의 자리</span></a></li>
+    <li class="toc-item"><a href="#s06"><span class="toc-num">06</span><span>神(신) — 마음의 자리</span></a></li>
+    <li class="toc-item"><a href="#s07"><span class="toc-num">07</span><span>정기신 통합 — 셋이 하나 되는 자리</span></a></li>
+    <li class="toc-item"><a href="#s08"><span class="toc-num">08</span><span>수련의 큰 지도로 돌아가기</span></a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 01 — 들어가며
+     ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="s01">
+  <div class="section-number">01</div>
+  <h2>들어가며 — 왜 정기신인가</h2>
+
+  <p>회원분들께서 선한인연 선한명상에 발을 들이신 이유는 저마다 다릅니다. 어떤 분은 몸이 힘들어서, 어떤 분은 마음이 막혀서, 또 어떤 분은 삶의 길을 다시 잡고 싶으셔서 오셨습니다.</p>
+
+  <p>그런데 시간이 흐르면서 한 가지 결을 만나시게 됩니다. <strong>몸과 마음이 따로가 아니라는 것.</strong> 몸이 풀리니 마음이 보이고, 마음이 보이니 다시 몸이 가벼워집니다. 그 사이를 잇고 있는 것이 있는데, 그것이 <strong>에너지</strong>입니다.</p>
+
+  <p>이 셋을 한자로 묶어 부르는 이름이 있습니다.</p>
+
+  <div class="quote">
+    精(정) · 氣(기) · 神(신)<br>
+    몸 · 에너지 · 마음
+    <em>선한인연 선한명상 수련의 세 축</em>
+  </div>
+
+  <h3>정기신은 어디에서 왔나</h3>
+
+  <p>정기신(精氣神)은 동양의 오랜 수행 전통에서 사용해 온 언어입니다. 도가에서, 한의학에서, 그리고 다양한 명상 전통에서 이 세 글자를 통해 사람을 보아왔습니다. <strong>사람을 몸만의 존재로도, 마음만의 존재로도 보지 않고 — 몸·에너지·마음이 하나로 흐르는 존재로 보는 시선</strong>입니다.</p>
+
+  <p>선한인연 선한명상의 수련 체계도 이 시선 위에 서 있습니다. 다만 우리는 정기신을 학문적으로만 만나지 않습니다. <strong>매일의 몸으로, 매일의 호흡으로, 매일의 마음으로 만나가는 길</strong>로 가져옵니다.</p>
+
+  <h3>왜 회원분들이 알아야 하는가</h3>
+
+  <p>수련을 처음 시작하실 때는 정기신이라는 말을 모르셔도 됩니다. 몸이 풀리는 것, 호흡이 깊어지는 것, 마음이 가라앉는 것 — 그 자체로 충분합니다.</p>
+
+  <p>하지만 시간이 지나면서 회원분들이 자주 마주하시는 질문이 있습니다.</p>
+
+  <div class="key-concept">
+    <strong>회원분들의 질문</strong>
+    <p>"매주의 아카데미가 어떻게 매달의 비움명상으로 이어지는 건가요?"<br>
+    "수승화강이라는 말은 무슨 뜻인가요?"<br>
+    "심경의 마음 코칭은 어디로 이어지는 건가요?"<br>
+    "이 수련들이 다 어떻게 연결되어 있는 걸까요?"</p>
+  </div>
+
+  <p>이 모든 질문의 답이 정기신 안에 있습니다. <strong>정기신은 선한인연 선한명상이 가르치는 모든 수련의 큰 지도</strong>입니다. 이 지도를 한 번 펼쳐 보시면, 자신이 지금 어디에 서 있는지, 다음에 어디로 가고 있는지가 보입니다.</p>
+
+  <p>이 자료는 그 지도를 함께 펼쳐 보는 시간입니다. 한 번에 깊이 만나기 어려운 큰 그림을 — 회원분들의 자기 자리에서 — 천천히 풀어드립니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      정기신을 알면<br>
+      자기가 어떤 자리에서 수련하고 있는지가 보입니다.<br><br>
+
+      <strong>몸을 다루는 자리인지,<br>
+      에너지를 다루는 자리인지,<br>
+      마음을 다루는 자리인지.</strong><br><br>
+
+      그 자리를 알아야 자기 수련이 정직해집니다.
+    </div>
+    <div class="recall-attr">— 시아님 · 정기신을 가르치며</div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 02 — 정기신 세 글자
+     ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="s02">
+  <div class="section-number">02</div>
+  <h2>정기신(精氣神) — 세 글자가 가리키는 자리</h2>
+
+  <p>정기신은 세 글자입니다. 그러나 이 세 글자는 따로 떨어져 있지 않습니다. <strong>하나의 사람 안에서 함께 움직이는 세 자리</strong>입니다.</p>
+
+  <p>먼저 각 글자가 가리키는 자리를 만나보겠습니다.</p>
+
+  <h3>精(정) — 가장 깊은 곳의 생명력</h3>
+
+  <div class="key-concept">
+    <strong>精(정)</strong>
+    <p><strong>가장 미세하고 정제된 것</strong>이라는 뜻을 담고 있습니다. 사람의 몸 안에서 가장 근원이 되는 자리, 생명을 이루고 있는 가장 깊은 자리. 흔히 정(精)을 '몸'이라고 풀지만, 단순히 살과 뼈만이 아닙니다. <strong>몸을 살아있게 만드는 가장 근원적인 힘</strong>입니다.</p>
+  </div>
+
+  <p>회원분들이 매주의 명상 아카데미에서 몸을 다지고, 매달의 비움명상에서 정화·해독·순환을 경험하실 때 — 그것이 바로 정(精)을 다루는 작업입니다. 몸의 결이 맑아지고, 잠이 깊어지고, 피부결이 정돈되는 것 모두가 정의 자리에서 일어나는 변화입니다.</p>
+
+  <h3>氣(기) — 흐르는 에너지</h3>
+
+  <div class="key-concept feel">
+    <strong>氣(기)</strong>
+    <p><strong>흐르는 에너지</strong>입니다. 정(精)이 자리에 머무는 것이라면 기(氣)는 움직이는 것입니다. 호흡이 그러하고, 감정의 흐름이 그러하고, 사람과 사람 사이의 기운이 그러합니다. <strong>몸과 마음 사이를 잇고 있는 자리</strong>입니다.</p>
+  </div>
+
+  <p>회원분들이 호흡 명상을 하실 때, 기감을 느끼실 때, 정념수련의 300분 고요함 안에서, 수승화강을 만나실 때 — 모두 기(氣)의 자리에서 일어나는 일입니다. 막혔던 곳이 풀리고, 정체된 것이 흘러가고, 차가웠던 곳이 따뜻해지는 변화가 기의 자리에서 일어납니다.</p>
+
+  <h3>神(신) — 깨어있는 알아차림</h3>
+
+  <div class="key-concept mind">
+    <strong>神(신)</strong>
+    <p><strong>깨어있는 알아차림</strong>입니다. 영(靈)이라고도 하고 마음이라고도 합니다. 그러나 단순히 '생각'이나 '감정'을 가리키는 것은 아닙니다. <strong>그 모든 것을 바라보고 있는 자리</strong> — 마음의 가장 깊은 자리에서 빛처럼 깨어있는 것이 신(神)입니다.</p>
+  </div>
+
+  <p>회원분들이 심경(心經) 수업을 통해 자기 마음을 들여다보실 때, 알아차림으로 바라보실 때 — 신(神)의 자리에서 만나시는 것입니다. 보이지 않던 것이 보이고, 알 수 없던 것이 알아지고, 막연했던 것이 명료해지는 변화가 신의 자리에서 일어납니다.</p>
+
+  <h3>세 자리는 따로 가지 않습니다</h3>
+
+  <p>여기까지 읽으시면 한 가지 질문이 생기실 수 있습니다. "그러면 명상 아카데미와 비움명상은 정(精)이고, 호흡과 정념수련은 기(氣)이고, 심경은 신(神)인가요?"</p>
+
+  <p>그렇게 깔끔하게 나뉘지 않습니다. <strong>세 자리는 따로 움직이지 않기 때문입니다.</strong></p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      아카데미의 한 호흡 안에<br>
+      정념수련의 한 고요함 안에<br>
+      비움의 한 끼니식 안에<br>
+      심경의 한 알아차림 안에<br><br>
+
+      <strong>정·기·신이 동시에 움직이고 있습니다.</strong><br><br>
+
+      세 글자이지만 하나의 흐름입니다.
+    </div>
+    <div class="recall-attr">— 시아님 · 정기신을 가르치며</div>
+  </div>
+
+  <p>그래서 정기신을 만난다는 것은 <strong>세 자리를 따로 공부하는 것이 아니라, 한 자리를 들여다보는 동안 다른 두 자리가 함께 보이는 흐름</strong>을 만나는 것입니다.</p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 03 — 4자리와 정기신의 만남
+     ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="s03">
+  <div class="section-number">03</div>
+  <h2>4자리와 정기신의 만남 — 큰 지도</h2>
+
+  <p>OJT 자료를 보신 회원분들은 <strong>4자리</strong>라는 말이 익숙하실 겁니다. 선한인연 선한명상이 가르치는 수련은 네 개의 자리로 펼쳐집니다.</p>
+
+  <div class="key-concept">
+    <strong>4자리</strong>
+    <p><strong>몸의 자리 · 느낌의 자리 · 마음공간의 자리 · 삶의 이치의 자리</strong></p>
+    <p>회원분이 수련을 시작하시면 몸의 자리에서 출발해, 느낌의 자리로, 마음공간의 자리로, 그리고 삶의 이치의 자리로 들어가시게 됩니다. 단계적으로 가는 것이기도 하고, 모든 자리를 함께 다루는 것이기도 합니다.</p>
+  </div>
+
+  <h3>4자리는 정기신과 어떻게 만나는가</h3>
+
+  <p>4자리가 정기신과 어떻게 연결되는지 펼쳐 보겠습니다. <strong>4자리는 정기신을 다른 언어로 펼친 것</strong>입니다. 정 → 기 → 신으로 단계적으로 깊어지고, 마지막에 셋이 통합되어 일상으로 흘러들어가는 흐름. 그 흐름이 4자리입니다.</p>
+
+  <div class="key-concept">
+    <strong>몸의 자리 → 精(정)</strong>
+    <p>정의 자리입니다. 매주의 명상 아카데미에서 몸을 다지고, 매달의 비움명상으로 깊이 정화하고, 섭생으로 몸의 결을 다듬는 모든 작업이 여기 들어갑니다. <strong>몸이라는 토대를 단단히 세우는 자리</strong>입니다.</p>
+  </div>
+
+  <div class="key-concept feel">
+    <strong>느낌의 자리 → 氣(기)</strong>
+    <p>기의 자리입니다. 호흡 명상, 기감, 정념수련의 300분 고요함, 수승화강, 공명과 공감 — 몸과 마음 사이를 흐르는 결을 다루는 모든 작업이 여기 들어갑니다. <strong>흐름이 자리 잡는 자리</strong>입니다.</p>
+  </div>
+
+  <div class="key-concept mind">
+    <strong>마음공간의 자리 → 神(신)</strong>
+    <p>신의 자리입니다. 심경 수업, 알아차림, 자기 패턴 직면, 무의식 정화 — 마음의 결을 들여다보는 모든 작업이 여기 들어갑니다. <strong>보지 못하던 것을 보고, 깨어있는 자리에서 자기를 만나는 자리</strong>입니다.</p>
+  </div>
+
+  <div class="key-concept life">
+    <strong>삶의 이치의 자리 → 정기신 통합</strong>
+    <p>정·기·신이 하나로 운용되는 자리입니다. 수련실 안에서 따로 다루던 몸·에너지·마음이 일상의 흐름 속에서 함께 움직이는 자리. <strong>수련이 곧 삶이 되고, 삶이 곧 수련이 되는 자리</strong>입니다. 9개의 심경(청심·하심·개심·회심 등)이 일상에서 자연스럽게 운용되는 결도 여기서 만나집니다.</p>
+  </div>
+
+  <h3>한 자리에 모아 보면</h3>
+
+  <p>이렇게 보시면 4자리와 정기신이 같은 길을 가리키고 있다는 것이 보입니다. <strong>정·기·신이 단계적으로 펼쳐지고, 마지막에 셋이 통합되어 삶으로 흐르는 흐름</strong>. 한 번에 펼쳐 보면 다음과 같습니다.</p>
+
+  <div class="quote">
+    몸의 자리 = 精(정)<br>
+    느낌의 자리 = 氣(기)<br>
+    마음공간의 자리 = 神(신)<br>
+    삶의 이치의 자리 = 정기신 통합
+    <em>— 선한인연 선한명상의 큰 지도 —</em>
+  </div>
+
+  <h3>지도를 갖는 것의 의미</h3>
+
+  <p>이 지도를 한 번 만나시면, 회원분들은 자기가 지금 어디에서 어떤 자리를 다루고 있는지 알게 되십니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      비움 중 일어나는 명현반응을 만났을 때<br>
+      "아, 이건 정(精)의 자리에서 일어나는 일이구나."<br><br>
+
+      호흡이 가빠지고 가슴이 답답할 때<br>
+      "아, 이건 기(氣)의 흐름이 막힌 자리구나."<br><br>
+
+      <strong>그 자리를 아는 것이 수련의 정직함</strong>입니다.
+    </div>
+    <div class="recall-attr">— 박선정 관장님 · 정기신 코칭에서</div>
+  </div>
+
+  <p>다음 챕터부터는 정기신 세 자리를 하나씩 자세히 만나가겠습니다. <strong>이론으로 토대를 잡고, 실전으로 일상에 가져오고, 회원분들의 사례로 살아있는 모습을 보여드리는 흐름</strong>입니다.</p>
+
+  <p>먼저 정(精) — 몸의 자리에서 출발하겠습니다.</p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 04 — 精(정) 몸의 자리
+     ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="s04">
+  <div class="section-number">04</div>
+  <h2>精(정) — 몸의 자리</h2>
+
+  <p>정기신의 첫 자리는 정(精)입니다. 가장 깊은 곳의 생명력이자, 모든 수련이 시작되는 자리. <strong>몸이 단단해야 다음 자리로 갈 수 있습니다.</strong></p>
+
+  <h3>왜 정(精)에서 시작하는가</h3>
+
+  <p>마음을 다스리고 싶으신 분들이 처음 오시면 마음을 먼저 다루고 싶어 하십니다. 그러나 선한인연 선한명상은 늘 몸에서 시작합니다. 이유가 있습니다.</p>
+
+  <div class="key-concept">
+    <strong>몸이 토대인 이유</strong>
+    <p><strong>몸이 흐트러져 있으면 마음을 들여다볼 힘이 나오지 않습니다.</strong> 잠이 부족한데 어떻게 깊은 알아차림을 할 수 있을까요. 몸이 무거운데 어떻게 가벼운 마음을 만날 수 있을까요. 정(精)이 흐트러진 자리에서 마음 작업을 하면 오히려 더 헝클어집니다.</p>
+  </div>
+
+  <p>그래서 회원분들이 처음 오시면 늘 몸의 자리부터 점검합니다. <strong>잠은 어떠신지, 식사는 어떠신지, 배변은 어떠신지, 몸에 통증은 없으신지.</strong> 이 기초가 단단해지지 않으면 다음 자리로 갈 수가 없습니다.</p>
+
+  <h3>정(精)의 본질 — 정제된 생명력</h3>
+
+  <p>精(정)이라는 한자를 풀어 보면 의미가 더 명확해집니다. 米(쌀 미)와 靑(푸를 청)이 만나 이루어진 글자. <strong>가장 정제되고 가장 본질이 되는 것</strong>이라는 뜻입니다.</p>
+
+  <p>그래서 정(精)을 단순히 '몸'이라고만 풀면 부족합니다. 정은 <strong>몸을 살아있게 만드는 가장 깊은 생명력, 몸이 작동할 수 있게 하는 근본 에너지</strong>입니다. 한의학에서는 이 정을 '선천지정(先天之精)'과 '후천지정(後天之精)'으로 나눕니다.</p>
+
+  <div class="key-concept">
+    <strong>선천의 정 · 후천의 정</strong>
+    <p><strong>선천지정(先天之精)</strong> — 태어날 때부터 부모로부터 받아 지니고 있는 정. 우리가 어쩌지 못하는, 이미 가지고 있는 자리입니다.</p>
+    <p style="margin-top:10px;"><strong>후천지정(後天之精)</strong> — 태어난 이후 매일의 섭생·호흡·생활을 통해 만들어 가는 정. <strong>우리가 다스릴 수 있는 자리</strong>입니다.</p>
+    <p style="margin-top:10px;">선한인연 선한명상의 수련은 이 후천지정을 다루는 자리에서 출발합니다.</p>
+  </div>
+
+  <h3>정(精)이 흐트러질 때 일어나는 일</h3>
+
+  <p>정이 흐트러지면 가장 먼저 몸으로 신호가 옵니다.</p>
+
+  <p><strong>잠이 얕아지고, 새벽에 자주 깨고, 아침에 일어나도 개운하지 않습니다.</strong> 식욕이 들쭉날쭉해지고, 단것이 자주 당기고, 배변이 일정하지 않아집니다. 피부결이 거칠어지고, 머리가 무거워지고, 한쪽 어깨가 자주 결립니다.</p>
+
+  <p>이런 신호들이 쌓이면 어느 순간 마음에도 영향이 옵니다. 짜증이 늘고, 집중이 안 되고, 작은 일에 흔들립니다. 그러나 그 뿌리는 정(精)에 있습니다. <strong>마음의 문제처럼 보이는 것이 사실은 몸의 흐트러짐에서 오는 경우</strong>가 많습니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      마음이 자꾸 무거우신 분께<br>
+      먼저 잠을 살펴봅니다.<br>
+      식사를 살펴봅니다.<br>
+      몸의 결을 살펴봅니다.<br><br>
+
+      <strong>몸이 정돈되면 마음의 절반은 풀려 있습니다.</strong>
+    </div>
+    <div class="recall-attr">— 박선정 관장님 · 회원을 마주하는 코칭에서</div>
+  </div>
+
+
+  <!-- ─── 4-2. 일상에서 정(精)을 만나는 자리 ─── -->
+
+  <h3>일상에서 정(精)을 만나는 자리</h3>
+
+  <p>이론으로 정을 알아도, 매일 만나지 않으면 살아있는 수련이 되지 못합니다. 회원분들이 일상에서 정을 다루는 길은 네 가지로 펼쳐집니다.</p>
+
+  <div class="key-concept">
+    <strong>① 섭생 — 먹는 것의 결</strong>
+    <p>몸에 들어가는 모든 것이 정을 만듭니다. 무엇을 먹는가도 중요하지만, 그보다 한 단계 깊은 자리가 있습니다. 바로 <strong>입맛과 몸맛의 차이</strong>입니다.</p>
+    <p style="margin-top:10px;"><strong>입맛은 쾌감을 따라갑니다.</strong> 자극적이고 강한 맛이 당기지요. 입은 즐겁지만 몸은 괴로워집니다.</p>
+    <p style="margin-top:10px;"><strong>몸맛은 다릅니다.</strong> 몸의 감각이 깨어나면 — 몸이 진짜 원하는 음식이 자연스럽게 당기기 시작합니다. 한 끼 식사가 몸 안에서 에너지로 자리 잡는 느낌, 포만감과 만족감이 살아나는 감각. 그러면서 음식에 대한 집착이 자유로움으로 풀려갑니다.</p>
+    <p style="margin-top:10px;"><strong>자연식이 억지가 아니라 맛있어서 당기는 결</strong> — 그것이 일상의 정 수련입니다.</p>
+  </div>
+
+  <div class="key-concept">
+    <strong>② 잠 — 회복의 자리</strong>
+    <p>잠이 정의 가장 큰 회복 시간입니다. <strong>딥슬립(깊은 잠)이 가능한 몸이 되어야 정이 단단해집니다.</strong> 잠을 잘 자려면 자기 전 두 시간이 중요합니다. 자극적인 것을 멀리하고, 호흡을 가라앉히는 시간이 필요합니다.</p>
+    <p style="margin-top:10px;">회원분들 중에 명상 아카데미와 비움명상을 함께 걸어가시며 처음으로 딥슬립을 경험하시는 분들이 많습니다. 평생 새벽에 깨던 잠이 통잠으로 바뀌는 변화 — 그게 정(精)이 회복되는 신호입니다.</p>
+  </div>
+
+  <div class="key-concept">
+    <strong>③ 몸의 정렬 — 자세와 기초 호흡</strong>
+    <p>몸이 비뚤어져 있으면 정의 흐름도 비뚤어집니다. 척추를 바로 세우고, 어깨를 풀고, 골반을 정돈하는 작업이 모두 정 수련입니다. 수련실에서 좌선·입선을 통해 다듬어 가는 것이지요.</p>
+    <p style="margin-top:10px;">기초 호흡도 정의 자리에서 이루어집니다. 깊고 느리게, 단전까지 닿는 호흡. 이 호흡이 자리 잡으면 다음 자리(기·氣)로 들어갈 토대가 마련됩니다.</p>
+  </div>
+
+  <div class="key-concept">
+    <strong>④ 비움명상 — 정화의 자리</strong>
+    <p>매달 한 번 돌아오는 비움명상이 정의 가장 깊은 작업입니다. 7년 동안 다듬어진 이 길은 단순한 단식이 아닙니다. <strong>몸 안의 탁기를 비우고, 막혔던 곳을 풀고, 가장 깊은 자리에서 새로운 흐름을 만드는 작업</strong>입니다.</p>
+    <p style="margin-top:10px;">특히 <strong>비움명상의 회복 섭생</strong>이 정의 토대를 다집니다. 비움이 끝난 후 일주일 동안 회복하는 섭생 — 오전 소금차, 점심 한식 소식, 오후 가벼운 차. 이 흐름이 매달 반복되면서 몸의 토대가 다듬어집니다.</p>
+    <p style="margin-top:10px;">비움명상에 대한 자세한 안내는 <strong>02 자료(비움명상 7년의 기록)</strong>에서 만나보실 수 있습니다.</p>
+  </div>
+
+
+  <!-- ─── 4-3. 회원분들이 만나신 정(精)의 변화 ─── -->
+
+  <h3>회원분들이 만나신 정(精)의 변화</h3>
+
+  <p>이론과 실전을 다 들으셔도, 실제 변화를 보지 못하시면 마음에 닿지 않습니다. 선한인연 선한명상 회원분들이 매주의 명상 아카데미와 매달의 정념수련, 비움명상, 그리고 심경의 마음 코칭을 함께 걸어오시며 만나신 정(精)의 변화를 모셔봅니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      <strong>이〇〇님</strong> — 평생 깊지 않던 잠이 통잠으로 자리 잡았습니다.<br>
+      피부결이 맑아지고 체형이 한층 정돈되어,<br>
+      "10년은 젊어졌다"는 말을 자주 듣게 되었습니다.<br><br>
+
+      <strong>이〇〇님</strong> — 틀어져 있던 골반과 척추가 바로 잡히며<br>
+      허리 라인이 또렷하게 살아났습니다.<br>
+      끊겼던 생리가 매달 정확한 주기로 돌아왔습니다.<br><br>
+
+      <strong>김〇〇님</strong> — 호르몬약과 우울증약을 끊을 만큼<br>
+      몸과 마음이 함께 단단해졌습니다.<br>
+      오래도록 안 빠지던 하체 살까지 빠져나갔습니다.<br><br>
+
+      <strong>오〇〇님</strong> — 출산 이후 흐트러졌던 몸이 제자리를 찾으며,<br>
+      결혼 전에 입던 옷이 다시 몸에 맞게 되었습니다.<br><br>
+
+      <strong>장〇〇님</strong> — 20년 동안 달고 살아온<br>
+      소화 장애와 변비, 다리 붓기가 풀려 나갔습니다.<br><br>
+
+      <strong>지〇〇님</strong> — 체중이 가벼워지면서<br>
+      일어나기조차 힘들었던 목·어깨·허리의 만성 통증이 풀려 나갔습니다.<br><br>
+
+      <strong>박〇〇님</strong> — 오래 굽어 있던 등이 펴지며<br>
+      반복되던 환절기 알레르기와 기침이 잦아들고,<br>
+      골다공증 회복 과정에서 몸의 토대가 다시 다져졌습니다.<br><br>
+
+      <strong>장〇〇님</strong> — 부친상의 슬픔 속에서도 매일의 좌선으로<br>
+      호흡과 몸이 안정되며, 어머니 곁을 지키는 힘이 되어주었습니다.
+    </div>
+    <div class="recall-attr">— 회원분들의 정(精) 변화</div>
+  </div>
+
+  <h3>이 변화들이 가르쳐 준 것</h3>
+
+  <p>이 모든 변화는 한 번의 수련으로 일어난 것이 아닙니다. <strong>매주의 명상 아카데미와 매달의 정념수련, 비움명상이 쌓이며 다져진 변화</strong>입니다. 정(精)은 한 번에 단단해지지 않습니다. 같은 자리에 반복해서 앉으며 차곡차곡 쌓여가는 토대입니다.</p>
+
+  <div class="key-concept feel">
+    <strong>정(精)이 단단해진 회원분들의 공통점</strong>
+    <p>1기 멤버 일곱 분의 변화에서 공통으로 보이는 흐름이 있습니다.</p>
+    <p style="margin-top:10px;">첫째, <strong>잠이 깊어졌습니다.</strong> 새벽에 깨지 않고, 아침에 개운하게 일어나는 변화.</p>
+    <p>둘째, <strong>오랜 통증·증상이 풀려 갔습니다.</strong> 만성 두통, 어깨 통증, 소화 장애, 변비 — 오래 달고 사신 것들이 차츰 정돈되었습니다.</p>
+    <p>셋째, <strong>몸이 가벼워졌습니다.</strong> 체중 감량 자체보다 — 체형과 라인이 자연스럽게 다듬어지고, 피부결이 맑아지는 변화.</p>
+    <p>넷째, <strong>마음의 토대가 단단해졌습니다.</strong> 작은 일에 덜 흔들리고, 자기 자리에서 회복할 힘이 자랐습니다.</p>
+  </div>
+
+  <p>특히 마지막 — <strong>"마음의 토대가 단단해졌다"</strong>는 변화가 중요합니다. 정(精)을 다지는 작업이 단지 몸의 변화로 끝나지 않고, <strong>다음 자리(기·氣)로 가는 토대가 되어 준다</strong>는 신호입니다.</p>
+
+
+  <!-- ─── 4-4. 정(精)이 단단해지면 — 다음 자리로 ─── -->
+
+  <h3>정(精)이 단단해지면 — 다음 자리로</h3>
+
+  <p>정이 단단해진다는 것은 어떤 모습일까요. 한 번 정리해 보면 다음과 같습니다.</p>
+
+  <div class="quote">
+    잠이 깊어지고<br>
+    식사가 맑아지고<br>
+    몸의 통증이 풀리고<br>
+    피부결이 정돈되는 자리.
+    <em>— 정(精)이 단단해지는 신호 —</em>
+  </div>
+
+  <p>이 신호들이 자리 잡으면, 자연스럽게 다음 자리로 가게 됩니다. 몸이 정돈되니 <strong>몸 안의 흐름</strong>이 보이기 시작합니다. 호흡이 깊어지고, 따뜻함이 도는 자리가 보이고, 막혔던 곳이 풀리는 느낌이 만져집니다.</p>
+
+  <p>그것이 다음 자리 — <strong>氣(기), 에너지의 자리</strong>입니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      정(精)이 흐트러져 있으면<br>
+      기(氣)를 다뤄도 잡히지 않습니다.<br><br>
+
+      <strong>그래서 늘 몸부터 입니다.<br>
+      몸이 단단해진 자리에서<br>
+      에너지의 흐름이 보입니다.</strong>
+    </div>
+    <div class="recall-attr">— 시아님 · 정에서 기로 넘어가는 결에서</div>
+  </div>
+
+  <p>다음 챕터에서 기(氣)의 자리를 함께 만나가겠습니다.</p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 05 — 氣(기) 에너지의 자리
+     ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="s05">
+  <div class="section-number">05</div>
+  <h2>氣(기) — 에너지의 자리</h2>
+
+  <p>정(精)이 단단해진 자리에서 만나는 다음 자리가 기(氣)입니다. <strong>몸과 마음 사이를 잇고 있는 흐름의 결</strong>입니다.</p>
+
+  <h3>왜 기(氣)인가</h3>
+
+  <p>회원분들이 자주 물으시는 질문이 있습니다. "정과 신은 알겠는데, 기는 정확히 무엇인가요?"</p>
+
+  <p>기(氣)는 사실 가장 만나기 어려운 자리입니다. 정(精)은 몸이라는 형태로 만나집니다. 신(神)은 알아차림이라는 명료한 자리에서 만나집니다. 그런데 기(氣)는 — <strong>형태도 없고, 보이지도 않고, 그러나 분명히 있는 흐름</strong>입니다.</p>
+
+  <div class="key-concept feel">
+    <strong>기(氣)의 자리</strong>
+    <p><strong>정(精)이 자리에 머무는 것이라면, 기(氣)는 움직이는 것입니다.</strong> 흐르고, 막히고, 다시 풀리는 결. 호흡이 그러하고, 감정의 흐름이 그러하고, 사람과 사람 사이의 기운이 그러합니다.</p>
+    <p style="margin-top:10px;">그래서 기를 다룬다는 것은 <strong>정체된 곳을 풀고, 막힌 곳을 트고, 흐름을 회복하는 작업</strong>입니다.</p>
+  </div>
+
+  <h3>정(精)과 기(氣)의 관계</h3>
+
+  <p>한 가지 중요한 점이 있습니다. <strong>정이 단단하지 않으면 기를 다뤄도 잡히지 않습니다.</strong></p>
+
+  <p>몸이 흐트러져 있는데 호흡 명상을 하면 호흡이 가빠지기만 합니다. 잠이 부족한데 기감을 만나려 하면 어지러움만 옵니다. 그래서 선한인연 선한명상은 늘 정(精)부터 다지고 기(氣)로 들어갑니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      정(精)이 단단해지면<br>
+      기(氣)는 자연스럽게 흐릅니다.<br><br>
+
+      억지로 기를 만들려 하지 않아도<br>
+      <strong>몸이 정돈된 자리에서<br>
+      흐름이 살아납니다.</strong>
+    </div>
+    <div class="recall-attr">— 박선정 관장님 · 정에서 기로 넘어가는 결에서</div>
+  </div>
+
+
+  <!-- ─── 5-2. 수승화강 ─── -->
+
+  <h3>수승화강(水昇火降) — 기의 핵심 작동 원리</h3>
+
+  <p>기(氣)의 흐름을 이해하는 가장 중요한 열쇠가 <strong>수승화강(水昇火降)</strong>입니다. 회원분들이 자주 듣는 말이지만, 정확히 무엇인지 모르고 지나가시는 경우가 많습니다.</p>
+
+  <p>한자를 풀어 보면 의미가 명확해집니다.</p>
+
+  <div class="quote">
+    水昇 (수승) — 물이 올라가고<br>
+    火降 (화강) — 불이 내려간다
+    <em>— 기(氣)의 가장 자연스러운 흐름 —</em>
+  </div>
+
+  <h3>수승화강의 흐름</h3>
+
+  <p>사람의 몸을 위·아래로 나누어 보면, <strong>아래는 따뜻하고 위는 시원해야</strong> 자연스럽습니다. 그것이 수승화강이 자리 잡은 모습입니다.</p>
+
+  <div class="key-concept feel">
+    <strong>수승화강이 자리 잡힌 몸</strong>
+    <p><strong>아랫배(단전)는 따뜻하고 묵직합니다.</strong> 손과 발이 따뜻합니다. 잠이 깊고, 식욕이 안정되고, 마음이 차분합니다.</p>
+    <p style="margin-top:10px;"><strong>가슴과 머리는 시원하고 가볍습니다.</strong> 답답함이 없고, 머리가 맑고, 생각이 명료합니다.</p>
+    <p style="margin-top:10px;">이것이 <strong>물(水)이 위로 올라가 머리를 식혀주고, 불(火)이 아래로 내려가 단전을 데워주는 흐름</strong>입니다.</p>
+  </div>
+
+  <h3>수승화강이 깨졌을 때</h3>
+
+  <p>그런데 일상의 회원분들이 만나시는 자리는 정반대인 경우가 많습니다.</p>
+
+  <div class="key-concept">
+    <strong>수승화강이 깨진 몸</strong>
+    <p><strong>아랫배는 차갑고, 손발도 차갑습니다.</strong> 단전에 묵직함이 없고, 잠이 얕고, 소화가 잘 안 됩니다.</p>
+    <p style="margin-top:10px;"><strong>가슴과 머리는 답답하고 뜨겁습니다.</strong> 가슴이 자주 두근거리고, 머리가 무겁고, 생각이 끊이지 않습니다.</p>
+    <p style="margin-top:10px;">이것이 바로 <strong>화기(火氣)가 위로 올라가 머리를 뜨겁게 하고, 수기(水氣)가 아래로 가라앉아 몸을 차갑게 하는</strong> 깨진 흐름입니다.</p>
+  </div>
+
+  <p>이 깨진 흐름은 단지 몸의 문제가 아닙니다. <strong>분노가 자주 올라오고, 작은 일에 흥분하고, 잠들지 못하는 마음</strong>이 모두 수승화강이 깨진 자리에서 일어나는 일입니다.</p>
+
+  <p>그래서 기(氣)의 자리에서 가장 먼저 회복하는 것이 <strong>수승화강의 흐름</strong>입니다. 이것이 회복되면 몸도 마음도 함께 가라앉습니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      마음이 자꾸 들끓는다고 하시는 분께<br>
+      먼저 단전을 살펴봅니다.<br>
+      손발이 차가운지 살펴봅니다.<br><br>
+
+      <strong>몸의 위·아래가 자기 자리로 돌아가면<br>
+      마음의 들끓음도 함께 가라앉습니다.</strong>
+    </div>
+    <div class="recall-attr">— 시아님 · 수승화강을 가르치며</div>
+  </div>
+
+
+  <!-- ─── 5-3. 일상에서 기(氣)를 만나는 자리 ─── -->
+
+  <h3>일상에서 기(氣)를 만나는 자리</h3>
+
+  <p>이론으로 기를 알아도, 매일 만나지 않으면 살아있는 수련이 되지 못합니다. 회원분들이 일상에서 기를 다루는 길은 다섯 가지로 펼쳐집니다.</p>
+
+  <div class="key-concept feel">
+    <strong>① 호흡 명상</strong>
+    <p>호흡이 기의 가장 직접적인 자리입니다. <strong>깊고 느린 호흡, 단전까지 닿는 호흡</strong>이 자리 잡으면 수승화강이 자연스럽게 회복됩니다.</p>
+    <p style="margin-top:10px;">선한인연 선한명상에서는 단순히 숨을 의식하는 것을 넘어 — 들숨에 어디까지 닿는지, 날숨에 무엇이 빠져나가는지를 알아차리는 호흡으로 깊어집니다. 호흡이 자리 잡으면 마음도 함께 가라앉습니다.</p>
+  </div>
+
+  <div class="key-concept feel">
+    <strong>② 기감 — 몸 안의 흐름 느끼기</strong>
+    <p>기(氣)는 보이지 않지만 <strong>느낌으로 만나집니다.</strong> 손바닥이 따뜻해지는 느낌, 단전에 묵직함이 모이는 느낌, 막혔던 곳이 풀리며 따뜻함이 도는 느낌 — 이 모든 것이 기감입니다.</p>
+    <p style="margin-top:10px;">처음에는 잘 잡히지 않습니다. 정(精)이 단단해지고 호흡이 자리 잡은 자리에서 비로소 기감이 살아납니다. 회원분들이 "어, 진짜 뭔가 흐르는 게 있네요" 하시는 순간이 그 자리입니다.</p>
+  </div>
+
+  <div class="key-concept feel">
+    <strong>③ 감정의 결 — 마음의 기(氣)</strong>
+    <p>감정도 기(氣)입니다. <strong>슬픔이 가슴을 무겁게 하고, 분노가 가슴을 뜨겁게 하고, 두려움이 단전을 차갑게 합니다.</strong> 감정 하나하나가 몸 안에서 기의 흐름을 만들고 있습니다.</p>
+    <p style="margin-top:10px;">감정을 누르거나 억압하면 기가 막힙니다. 감정을 알아차리고 흘려보내는 것 — 그것이 감정 차원의 기 수련입니다. <strong>심경(心經)의 마음 코칭</strong>이 이 자리를 다룹니다.</p>
+  </div>
+
+  <div class="key-concept feel">
+    <strong>④ 공명과 공감의 감각 — 사람 사이의 기(氣)</strong>
+    <p>한 사람의 에너지를 다른 사람이 함께 느끼고, 또 다른 이가 그 흐름에 공명하는 자리입니다. 자기 안의 기만이 아니라 — <strong>사람과 사람 사이를 흐르는 기</strong>까지 만나는 자리입니다.</p>
+    <p style="margin-top:10px;">혼자서는 만져지지 않던 자기 안의 막힘이, 함께하는 시간 속에서 누군가의 흐름을 만나며 비로소 보이기도 합니다. <strong>공명과 공감의 감각</strong>으로 서로를 받아 흘려가는 자리입니다.</p>
+  </div>
+
+  <div class="key-concept feel">
+    <strong>⑤ 정념수련 — 매달 한 번의 300분</strong>
+    <p>매달 첫째 주 토요일, <strong>오후 1시부터 6시까지 5시간(300분) 동안 고요함을 유지하며 깨어있는 그룹 수련</strong>입니다. 매주의 아카데미가 1~2시간 동안 에너지를 풀고 다지는 시간이라면, 정념수련은 <strong>그 에너지를 깊이 앉히는 시간</strong>입니다.</p>
+    <p style="margin-top:10px;">300분이라는 지속성이 핵심입니다. 의식이 흐트러지고 다시 돌아오는 그 반복이 — <strong>에너지 공력</strong>을 쌓는 시간입니다. 참석 전에는 물수행으로 육기를 정화하고, 소식으로 몸을 가볍게 하고, 바라봄의 자리에서 자기 치우침을 관(觀)하는 준비가 함께 갑니다. 5시간의 고요함을 통해 의식이 깊어지면, 일상에서 흔들리지 않는 기(氣)의 공력이 자라납니다.</p>
+  </div>
+
+
+  <!-- ─── 5-4. 회원분들이 만나신 기(氣)의 변화 ─── -->
+
+  <h3>회원분들이 만나신 기(氣)의 변화</h3>
+
+  <p>선한인연 선한명상 회원분들이 호흡 명상과 정념수련의 300분 고요함, 비움명상의 깊은 시간을 함께 걸어가시며 만나신 기(氣)의 변화를 모셔봅니다. 정(精)의 변화가 몸의 가시적 변화였다면, 기(氣)의 변화는 <strong>흐름의 변화</strong>입니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      <strong>지〇〇님</strong> — 호흡 수련 중 발바닥에서 처음 에너지가 깨어났습니다.<br>
+      그 에너지가 척추를 따라 올라오며 통감으로 막힘을 알아차리게 되었고,<br>
+      <strong>오랜 통증이 풀려나가며 몸 곳곳에 따뜻한 흐름이 돌기 시작했습니다.</strong><br><br>
+
+      <strong>이〇〇님</strong> — 생리 전 일주일의 극심한 통증이<br>
+      정체된 기(氣)의 신호였음을 알아차리며,<br>
+      가라앉아 있던 감정을 호흡으로 다스려 갔습니다.<br>
+      <strong>호르몬과 흐름이 회복되며 오래 끊겼던 생리가 매달 정확한 주기로 돌아왔습니다.</strong><br><br>
+
+      <strong>김〇〇님</strong> — 일터의 갈등 속에서 <strong>마음의 기(氣) — 감정</strong>이 들끓을 때마다<br>
+      매주 아카데미와 매달 비움으로 돌아왔습니다.<br>
+      들끓던 감정이 가라앉으며 "에너지가 단정해졌다"는 변화를 만났고,<br>
+      <strong>같은 상황에서도 흔들리지 않는 힘</strong>이 자라났습니다.<br><br>
+
+      <strong>정〇〇님</strong> — 명상 중 양에서 음으로, 음에서 양으로 기운이<br>
+      자연스럽게 순환되는 흐름을 만났습니다.<br>
+      관절공 수련 후에는 <strong>하체에 시원한 에너지가 풀려나가는 감각</strong>이 살아났습니다.<br><br>
+
+      <strong>박〇〇님</strong> — 1회차 수련에서 손끝·발끝의 떨림·따뜻함·시원함을<br>
+      처음으로 만나며, 평생 닫혀 있던 몸의 감각이 깨어나기 시작했습니다.<br>
+      <strong>오랜 무기력이 사라지고 일상의 활력이 살아났습니다.</strong><br><br>
+
+      <strong>임〇〇님</strong> — "기운줄(경락)에 막힌 부분을 뚫는 것 같다"는<br>
+      확연한 흐름을 체험하며, <strong>평소 답답하던 가슴과 머리가 시원해지고<br>
+      손발의 온기가 살아나는 변화</strong>를 만났습니다.
+    </div>
+    <div class="recall-attr">— 회원분들의 기(氣) 변화</div>
+  </div>
+
+  <h3>기(氣)의 변화가 가르쳐 준 것</h3>
+
+  <div class="key-concept feel">
+    <strong>기(氣) 변화의 공통 흐름</strong>
+    <p>1기 멤버 회원분들의 기 변화에서 함께 보이는 흐름이 있습니다.</p>
+    <p style="margin-top:10px;">첫째, <strong>막혔던 자리가 풀려갑니다.</strong> 만성 통증, 생리 불순, 소화 장애 같은 — 정체된 기의 신호들이 차츰 풀어졌습니다.</p>
+    <p>둘째, <strong>수승화강이 자리 잡습니다.</strong> 단전이 따뜻해지고, 손발에 온기가 돌고, 가슴과 머리가 가벼워지는 변화.</p>
+    <p>셋째, <strong>감정의 흐름이 명료해집니다.</strong> 감정에 휘둘리지 않고, 그 감정이 어디서 와서 어디로 가는지 알아차리는 힘이 자랍니다.</p>
+    <p>넷째, <strong>사람과의 관계에서 흘러가는 기를 느낍니다.</strong> 누구와 있을 때 자기가 채워지고 누구와 있을 때 빠져나가는지 — 그 흐름을 알아차리게 되십니다.</p>
+  </div>
+
+  <p>특히 마지막 — <strong>"사람과의 관계에서 기를 느끼는"</strong> 변화가 중요합니다. 기(氣)의 자리가 깊어지면 자기 안의 기를 넘어 — <strong>사람 사이를 흐르는 기</strong>까지 만나게 됩니다. 그 자리가 다음 챕터(神, 신)로 가는 다리가 되어 줍니다.</p>
+
+
+  <!-- ─── 5-5. 기(氣)가 자리 잡으면 — 다음 자리로 ─── -->
+
+  <h3>기(氣)가 자리 잡으면 — 다음 자리로</h3>
+
+  <p>기가 자리 잡는다는 것은 어떤 모습일까요. 한 번 정리해 보면 다음과 같습니다.</p>
+
+  <div class="quote">
+    호흡이 깊어지고<br>
+    단전이 따뜻해지고<br>
+    감정의 흐름이 명료해지고<br>
+    사람 사이의 기운이 만져지는 자리.
+    <em>— 기(氣)가 자리 잡는 신호 —</em>
+  </div>
+
+  <p>이 신호들이 자리 잡으면, 자연스럽게 다음 자리로 가게 됩니다. 흐름이 살아나니 — <strong>그 흐름을 바라보고 있는 자리</strong>가 보이기 시작합니다. 흐름 안에서 흔들리지 않는 자리, 그 모든 것을 깨어서 알아차리는 자리.</p>
+
+  <p>그것이 다음 자리 — <strong>神(신), 마음의 자리</strong>입니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      기(氣)의 흐름이 살아나면<br>
+      그 흐름을 바라보는 자리가 함께 깨어납니다.<br><br>
+
+      <strong>흐름 안에서 흔들리지 않는 자리.<br>
+      그것이 신(神)의 자리</strong>입니다.
+    </div>
+    <div class="recall-attr">— 박선정 관장님 · 기에서 신으로 넘어가는 결에서</div>
+  </div>
+
+  <p>다음 챕터에서 신(神)의 자리를 함께 만나가겠습니다.</p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 06 — 神(신) 마음의 자리
+     ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="s06">
+  <div class="section-number">06</div>
+  <h2>神(신) — 마음의 자리</h2>
+
+  <p>정(精)이 단단해지고 기(氣)가 흐르기 시작한 자리에서 만나는 다음 자리가 신(神)입니다. <strong>모든 것을 깨어서 바라보고 있는 가장 깊은 자리</strong>입니다.</p>
+
+  <h3>왜 신(神)인가</h3>
+
+  <p>회원분들이 자주 이런 질문을 하십니다. "마음이 무엇인지는 어렴풋이 알겠는데, 그것을 바라보는 자리가 또 따로 있다는 게 무슨 뜻인가요?"</p>
+
+  <p>마음에는 두 가지 자리가 있습니다.</p>
+
+  <div class="key-concept mind">
+    <strong>두 가지 마음의 자리</strong>
+    <p><strong>흘러가는 마음</strong> — 감정, 생각, 기억, 욕구. 매 순간 일어나고 사라지는 것들. 이것이 일상에서 우리가 '마음'이라고 부르는 자리입니다.</p>
+    <p style="margin-top:10px;"><strong>그 모든 것을 바라보고 있는 마음</strong> — 흘러가는 것에 휩쓸리지 않고, 그 흐름을 알아차리고 있는 자리. 흔들리지 않고 깨어있는 자리. <strong>이것이 신(神)의 자리</strong>입니다.</p>
+  </div>
+
+  <p>일상에서 우리는 흘러가는 마음에 휩쓸려 살아갑니다. 화가 나면 화에 끌려가고, 두려움이 오면 두려움에 묻히고, 기쁨이 오면 기쁨에 들떠 갑니다. 그런데 그 모든 것을 — <strong>한 발 뒤로 물러나서 바라보는 자리</strong>가 있습니다. 그 자리가 깨어났을 때 비로소 자기 마음을 다스릴 수 있게 됩니다.</p>
+
+  <h3>神(신)의 본질 — 깨어있는 알아차림</h3>
+
+  <p>神(신)이라는 한자는 본래 신령스러움, 영(靈)을 가리키는 글자입니다. 그러나 종교적 의미보다도 — 사람 안에 깃든 <strong>가장 깊고 가장 깨어있는 자리</strong>를 가리키는 말로 사용되어 왔습니다.</p>
+
+  <div class="key-concept mind">
+    <strong>신(神)의 자리</strong>
+    <p><strong>흘러가는 모든 것을 깨어서 바라보고 있는 자리.</strong> 감정의 흐름 속에서도 흔들리지 않고, 생각의 소용돌이 속에서도 휩쓸리지 않고, 일어나고 사라지는 것들을 그저 알아차리고 있는 자리.</p>
+    <p style="margin-top:10px;">이 자리가 깨어나면 — 같은 일이 일어나도 같은 방식으로 휘둘리지 않게 됩니다. <strong>흐름을 보면서 흐름 안에 있을 수 있는 자리</strong>입니다.</p>
+  </div>
+
+  <h3>정(精)·기(氣)·신(神)의 관계</h3>
+
+  <p>정·기·신은 따로 가지 않는다고 말씀드렸습니다. 그 흐름이 가장 명확하게 드러나는 자리가 신(神)의 자리입니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      신(神)의 자리는<br>
+      마음만으로 깨어나지 않습니다.<br><br>
+
+      <strong>몸이 정돈되어야 마음을 들여다볼 힘이 나오고,<br>
+      에너지가 흘러야 마음이 명료해지고,<br>
+      그 자리에서 비로소 신이 깨어납니다.</strong>
+    </div>
+    <div class="recall-attr">— 시아님 · 신(神)을 가르치며</div>
+  </div>
+
+  <p>그래서 정(精)을 다지는 명상 아카데미와 비움명상도, 기(氣)를 다루는 호흡과 정념수련, 수승화강도 — <strong>모두 결국 신(神)이 깨어나기 위한 토대</strong>입니다. 토대가 마련된 후에야 비로소 마음의 가장 깊은 결이 보이기 시작합니다.</p>
+
+
+  <!-- ─── 6-2. 마음의 결을 들여다보는 자리 ─── -->
+
+  <h3>마음의 결을 들여다보는 자리</h3>
+
+  <p>이론으로 신을 알아도, 매일 만나지 않으면 살아있는 수련이 되지 못합니다. 회원분들이 일상에서 신을 다루는 길은 세 가지로 펼쳐집니다.</p>
+
+  <div class="key-concept mind">
+    <strong>① 알아차림 — 가장 기초가 되는 자리</strong>
+    <p>신(神) 수련의 출발점은 <strong>알아차림</strong>입니다. 지금 이 순간 자기 안에서 일어나고 있는 것을 — 감정, 생각, 몸의 감각을 — 그저 알아차리는 것. 평가하지도 않고, 바꾸려 하지도 않고, 그저 보는 것입니다.</p>
+    <p style="margin-top:10px;">처음에는 잘 안 됩니다. 알아차리려 하면 다시 흘러가는 마음에 휩쓸립니다. 그러나 <strong>매일 조금씩 반복하면 점점 그 자리가 자리 잡습니다.</strong> 화가 나는 순간에 "아, 화가 났구나" 하고 알아차리는 시선. 그것이 신(神)의 자리가 깨어나는 첫 신호입니다.</p>
+  </div>
+
+  <div class="key-concept mind">
+    <strong>② 자기 패턴 직면 — 보지 못하던 것을 보는 자리</strong>
+    <p>알아차림이 깊어지면 자기 안의 <strong>반복되는 패턴</strong>이 보이기 시작합니다. 같은 자리에서 매번 같은 방식으로 흔들리는 것 — 그것이 자기 패턴입니다.</p>
+    <p style="margin-top:10px;">선한인연 선한명상에서는 <strong>심경(心經)의 마음 코칭</strong>을 통해 이 패턴을 직면합니다. 부모와의 관계, 사람과의 관계, 자기를 대하는 태도 — 그 안에 반복되는 흐름을 함께 들여다보고, 그 뿌리를 만나는 작업입니다. 이 자리에서 회원분들은 자기 자신을 새롭게 만나게 되십니다.</p>
+  </div>
+
+  <div class="key-concept mind">
+    <strong>③ 무의식 정화 — 가장 깊은 자리</strong>
+    <p>패턴의 뿌리를 따라 들어가면 <strong>무의식의 자리</strong>까지 닿게 됩니다. 평소 의식하지 못하지만 — 어린 시절의 경험, 가족 안에서 받은 영향, 살아온 시간 속에서 쌓인 것들이 그 자리에 잠겨 있습니다.</p>
+    <p style="margin-top:10px;">이 자리는 혼자 들어가기 어렵습니다. <strong>매주의 명상 아카데미가 다져온 몸의 토대, 매달의 정념수련이 길러준 고요함의 공력, 비움명상이 만들어 준 깊은 정화의 시간, 그리고 심경의 마음 코칭</strong>이 함께할 때 비로소 깊이 들어갈 수 있습니다. 이 자리에서 정화가 일어나면 같은 일이 다른 방식으로 다가오기 시작합니다.</p>
+  </div>
+
+
+  <!-- ─── 6-3. 9심경 가벼운 안내 ─── -->
+
+  <h3>9심경(九心鏡) — 신의 자리가 펼쳐진 길</h3>
+
+  <p>신(神)의 자리가 깊어지면 만나게 되는 자리가 있습니다. <strong>9심경(九心鏡)</strong>입니다.</p>
+
+  <p>9심경은 정기신 통합을 위한 아홉 가지 마음의 언어입니다. <strong>청심(淸心) · 하심(下心) · 개심(開心) · 회심(回心)</strong>으로 시작해 일상의 자리로 펼쳐지고, 깊어지면 <strong>부동심(不動心)</strong>이라는 흔들리지 않는 자리까지 가는 길입니다.</p>
+
+  <div class="key-concept mind">
+    <strong>9심경의 길</strong>
+    <p>9심경은 단순히 마음의 종류를 나누어 둔 것이 아닙니다. <strong>회원분이 일상에서 마음을 어떻게 운용할 수 있는지를 가르치는 살아있는 길</strong>입니다. 깨끗한 마음으로 시작해, 자기를 낮추는 마음, 마음을 여는 마음, 돌이키는 마음으로 펼쳐집니다.</p>
+    <p style="margin-top:10px;">이 길이 일상에서 자리 잡으면 — 같은 상황에서도 다른 마음으로 응할 수 있게 됩니다. 그것이 신(神)이 깨어난 자리에서 일어나는 일입니다.</p>
+  </div>
+
+  <div class="bridge-box">
+    <div class="bridge-mark">SEPARATE GUIDE</div>
+    <div class="bridge-title">
+      9심경의 깊이 있는 운용은<br>별도 자료에서 만나가겠습니다
+    </div>
+    <div class="bridge-text">
+      9심경은 그 자체로 깊이 있는 자리이기에,<br>
+      이 자료에서는 가볍게 안내만 드렸습니다.<br><br>
+      각 심경의 의미와 일상 운용법은<br>
+      <strong>추후 별도 자료(GUIDE 06)</strong>에서<br>
+      자세히 다뤄가겠습니다.
+    </div>
+  </div>
+
+
+  <!-- ─── 6-4. 회원분들이 만나신 신(神)의 변화 ─── -->
+
+  <h3>회원분들이 만나신 신(神)의 변화</h3>
+
+  <p>선한인연 선한명상 회원분들이 비움명상에서 무의식을 만나시고, 심경의 마음 코칭에서 그 뿌리를 함께 들여다보시며 만나신 신(神)의 변화를 모셔봅니다. 정(精)의 변화가 몸의 변화였다면, 기(氣)의 변화가 흐름의 변화였다면 — <strong>신(神)의 변화는 자기를 바라보는 시선의 변화</strong>입니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      <strong>이〇〇님</strong> — "어머니의 고집이 곧 내 고집이고,<br>
+      그것을 인정하지 못하는 것이 나의 고집이다."<br>
+      <strong>평생 보지 못하던 자기 패턴이 명료하게 보이기 시작했습니다.</strong><br><br>
+
+      <strong>이〇〇님</strong> — 오래 묻어두었던 폭식과 구토를<br>
+      처음으로 언어로 꺼내고, 가족 안에서 직접 풀어냈습니다.<br>
+      결핍에서 비롯된 깊은 수치심의 뿌리를<br>
+      <strong>깨어서 만나는 시선</strong>이 열렸습니다.<br><br>
+
+      <strong>김〇〇님</strong> — 아버지의 옛 일기를 읽으며,<br>
+      "내가 기억하던 아빠는 내 결핍이 만들어낸 상이었다"는 것을 직면했습니다.<br>
+      <strong>부모를 원망하던 마음이 자기 자신을 보는 마음으로 돌아왔습니다.</strong><br><br>
+
+      <strong>오〇〇님</strong> — "안 돼, 안 돼"로 자기를 향해 일어나던 마음이<br>
+      사실은 또 다른 자기 보호였음을 받아들이며,<br>
+      <strong>자기를 공격하던 패턴이 자기를 끌어안는 마음</strong>으로 바뀌었습니다.<br><br>
+
+      <strong>지〇〇님</strong> — "기준의 주어가 부모가 아니라 '나'였다."<br>
+      평생 부모 탓을 해오던 마음이 자기 자신으로 돌아왔습니다.<br>
+      <strong>의존하던 패턴이 보이며 같은 상황에서도 다른 선택이 가능해졌습니다.</strong><br><br>
+
+      <strong>장〇〇님</strong> — 어머니께 향하던 짜증과 닦달이<br>
+      <strong>자기 자신을 향한 마음의 투영</strong>이었음을 만났습니다.<br>
+      어머니 안의 자기를 깨어서 바라보는 시선이 자라났습니다.<br><br>
+
+      <strong>임〇〇님</strong> — "무시당하고 싶지 않은 마음이 곧 누군가를 무시하는 마음이었다."<br>
+      <strong>오래도록 가라앉아 있던 우울과 무시당함에 대한 두려움이 풀리며,<br>
+      가족과 동료를 보는 시선이 부드러워졌습니다.</strong><br><br>
+
+      <strong>정〇〇님</strong> — 엘리베이터 이웃의 목소리에 일어나는 거부감에서<br>
+      "내 공간을 지키려는 마음, 무언가를 뺏기기 싫어하는 자기"를 알아차렸습니다.<br>
+      <strong>일상의 작은 트리거 속에서 자기 패턴이 보이기 시작했습니다.</strong>
+    </div>
+    <div class="recall-attr">— 회원분들의 신(神) 변화</div>
+  </div>
+
+  <h3>이 변화들이 가르쳐 준 것</h3>
+
+  <div class="key-concept mind">
+    <strong>신(神) 변화의 공통 흐름</strong>
+    <p>1기 멤버 회원분들의 신 변화에서 함께 보이는 흐름이 있습니다.</p>
+    <p style="margin-top:10px;">첫째, <strong>자기 자신을 새롭게 만나게 되십니다.</strong> "내가 이런 사람이었구나"를 알아차리는 자리. 이전에는 보이지 않던 자기 모습이 명료해지는 변화.</p>
+    <p>둘째, <strong>패턴의 뿌리가 보입니다.</strong> 같은 자리에서 매번 흔들리던 것이 어디에서 왔는지 — 부모, 어린 시절, 살아온 시간 — 그 뿌리가 드러납니다.</p>
+    <p>셋째, <strong>자기를 받아들이는 힘이 자랍니다.</strong> 보이는 자기를 부정하거나 비난하지 않고, 그저 그것이 나임을 받아들이는 자리. 그 받아들임 자체가 정화입니다.</p>
+    <p>넷째, <strong>같은 상황 앞에서도 다른 마음으로 응하게 됩니다.</strong> 패턴이 보이고 뿌리가 풀리면, 같은 일이 와도 같은 방식으로 휘둘리지 않게 됩니다. <strong>자기를 다스리는 힘</strong>이 자라납니다.</p>
+  </div>
+
+  <p>특히 마지막 — <strong>"자기를 다스리는 힘"</strong>이 신(神)의 자리가 가장 깊어진 신호입니다. 흐름 안에 있으면서도 흐름에 휘둘리지 않는 자리. 그 자리가 일상에서 자리 잡으면 — 비로소 정·기·신이 하나로 통합된 자리에 닿게 됩니다.</p>
+
+
+  <!-- ─── 6-5. 신(神)이 깨어나면 — 통합의 자리로 ─── -->
+
+  <h3>신(神)이 깨어나면 — 통합의 자리로</h3>
+
+  <p>신이 깨어난다는 것은 어떤 모습일까요. 한 번 정리해 보면 다음과 같습니다.</p>
+
+  <div class="quote">
+    자기 패턴이 보이고<br>
+    그 뿌리가 명료해지고<br>
+    자기를 받아들이는 힘이 자라고<br>
+    흐름 안에 있으면서도 흐름에 휩쓸리지 않는 자리.
+    <em>— 신(神)이 깨어나는 신호 —</em>
+  </div>
+
+  <p>이 신호들이 자리 잡으면, 자연스럽게 다음 자리로 가게 됩니다. <strong>정과 기와 신이 따로 작동하지 않고 — 하나의 흐름으로 함께 움직이는 자리</strong>입니다.</p>
+
+  <p>그것이 다음 자리 — <strong>정기신 통합, 셋이 하나 되는 자리</strong>입니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      신(神)이 깨어나면<br>
+      비로소 정과 기와 신이 함께 흐르고 있음이 보입니다.<br><br>
+
+      <strong>셋이 따로 가는 게 아니라<br>
+      한 사람 안에서 하나로 움직이고 있다는 것</strong>이<br>
+      그제서야 자기 자리에서 알아집니다.
+    </div>
+    <div class="recall-attr">— 박선정 관장님 · 신에서 통합으로 넘어가는 결에서</div>
+  </div>
+
+  <p>다음 챕터에서 정기신이 하나로 통합되는 자리를 함께 만나가겠습니다.</p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 07 — 정기신 통합
+     ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="s07">
+  <div class="section-number">07</div>
+  <h2>정기신 통합 — 셋이 하나 되는 자리</h2>
+
+  <p>여기까지 정·기·신 세 자리를 하나씩 만나왔습니다. 그러나 처음부터 말씀드린 것처럼, <strong>이 셋은 따로 가는 것이 아닙니다.</strong> 한 사람 안에서 함께 움직이는 하나의 흐름입니다.</p>
+
+  <p>이 챕터에서는 정·기·신이 <strong>실제로 어떻게 하나로 통합되는지</strong>, 그리고 통합된 자리에서 무엇이 달라지는지를 함께 만나가겠습니다.</p>
+
+  <h3>통합이란 무엇인가</h3>
+
+  <p>통합이라는 말은 흔히 "여러 개를 합친다"는 뜻으로 쓰입니다. 그러나 정기신의 통합은 그런 의미가 아닙니다.</p>
+
+  <div class="key-concept life">
+    <strong>정기신 통합의 의미</strong>
+    <p>정·기·신은 본래 <strong>따로 떨어져 있던 것이 아닙니다.</strong> 한 사람 안에서 늘 함께 작동하고 있던 것입니다. 다만 우리가 일상에서 그것을 알아차리지 못했을 뿐입니다.</p>
+    <p style="margin-top:10px;">통합이란 — <strong>본래 하나였던 것을 다시 하나로 보는 자리에 닿는 것</strong>입니다. 따로 다루던 것을 하나로 묶는 것이 아니라, 본래 하나임을 기억해 가는 흐름입니다.</p>
+  </div>
+
+  <p>회원분들이 선한인연 선한명상의 수련을 처음 만나실 때는 정·기·신을 따로 만나십니다. 명상 아카데미에서 몸과 호흡으로 정·기를, 정념수련에서 300분 고요함의 기(氣) 공력을, 비움명상에서 깊은 정화로 정과 무의식을, 심경에서 마음의 뿌리로 신을. 그러나 시간이 흐르면서 <strong>한 자리에서 셋이 함께 움직이고 있음을 알아차리시는 순간</strong>이 옵니다. 그 순간이 통합의 시작입니다.</p>
+
+  <h3>삶의 이치의 자리에서 만나는 통합</h3>
+
+  <p>OJT 자료에서 만나신 4자리를 다시 떠올려 보겠습니다. <strong>몸의 자리 · 느낌의 자리 · 마음공간의 자리 · 삶의 이치의 자리</strong>. 이 4자리 중 마지막인 <strong>삶의 이치의 자리</strong>가 정기신 통합의 자리입니다.</p>
+
+  <div class="key-concept life">
+    <strong>삶의 이치의 자리 — 정기신이 통합된 자리</strong>
+    <p>이 자리는 수련실 안에서만 머무는 자리가 아닙니다. <strong>수련에서 만난 것들이 일상으로 옮겨가는 자리</strong>입니다. 비움 중에 만난 몸의 감각이 매일의 식사로 흘러들어가고, 호흡 명상에서 익힌 결이 직장에서의 호흡으로 이어지고, 심경에서 직면한 자기 패턴이 가족과의 관계에서 다스려지는 자리.</p>
+    <p style="margin-top:10px;">정·기·신이 따로 작동하지 않습니다. 한 순간의 결정에도, 한 마디의 말에도, 한 번의 호흡에도 — <strong>몸과 에너지와 마음이 함께 움직이고 있음</strong>이 만져지는 자리입니다.</p>
+  </div>
+
+  <h3>통합된 자리의 모습</h3>
+
+  <p>통합이 자리 잡으신 회원분들에게서 보이는 흐름이 있습니다.</p>
+
+  <div class="key-concept life">
+    <strong>통합된 자리의 신호</strong>
+    <p>첫째, <strong>일상이 곧 수련이 됩니다.</strong> 수련실에 가서 따로 수련하는 것이 아니라, 매일의 식사·호흡·관계가 모두 수련의 자리가 됩니다.</p>
+    <p style="margin-top:10px;">둘째, <strong>같은 상황 앞에서도 다른 마음으로 응하게 됩니다.</strong> 이전에는 휘둘리던 자리에서 흔들리지 않게 되고, 막히던 자리에서 흘러가게 됩니다.</p>
+    <p>셋째, <strong>자기 자리에서 회복하는 힘이 자랍니다.</strong> 흔들려도 다시 돌아오고, 막혀도 다시 풀리고, 헝클어져도 다시 정돈되는 힘이 자기 안에 자리 잡습니다.</p>
+    <p>넷째, <strong>9개의 심경이 자연스럽게 운용됩니다.</strong> 청심·하심·개심·회심... 각 자리에서 마음을 어떻게 가져갈지가 — 머리로 생각해서가 아니라, <strong>몸과 에너지와 마음이 함께 움직이는 흐름</strong>으로 자연스럽게 되어집니다.</p>
+  </div>
+
+  <h3>통합은 도착이 아니라 흐름</h3>
+
+  <p>한 가지 중요한 점이 있습니다. <strong>통합은 한 번 도달하면 끝나는 자리가 아닙니다.</strong> 매 순간 다시 새롭게 만나가야 하는 흐름입니다.</p>
+
+  <p>하루 동안에도 통합되었다가 풀어졌다가, 다시 통합되었다가 풀어졌다가 합니다. 어떤 날은 정이 흔들리고, 어떤 날은 기가 막히고, 어떤 날은 신이 어두워집니다. 그러나 <strong>다시 자기 자리로 돌아오는 힘</strong>이 자리 잡으면 — 그것이 통합이 자리 잡은 신호입니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      통합은<br>
+      한 번에 도달하는 자리가 아닙니다.<br><br>
+
+      매일 흔들리고, 매일 다시 돌아옵니다.<br>
+      그러나 <strong>돌아오는 자리가 점점 자연스러워짐</strong> —<br>
+      그 과정이 곧 통합입니다.
+    </div>
+    <div class="recall-attr">— 시아님 · 정기신 통합을 풀어가며</div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 08 — 수련의 큰 지도로 돌아가기
+     ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="s08">
+  <div class="section-number">08</div>
+  <h2>수련의 큰 지도로 돌아가기</h2>
+
+  <p>이제 자료의 마지막 자리에 와 있습니다. 정기신이라는 큰 그림을 함께 펼쳐 보았습니다.</p>
+
+  <h3>정기신을 만난 지금</h3>
+
+  <p>이 자료를 처음 펼치셨을 때와 지금은 — 회원분들이 자기 수련을 보시는 시선이 조금 달라지셨을 수 있습니다.</p>
+
+  <div class="key-concept">
+    <strong>정기신을 만난 후</strong>
+    <p>매주의 명상 아카데미가 단지 주간 모임이 아니라 <strong>정(精)과 기(氣)를 일상에서 다지는 자리</strong>임이 보입니다.</p>
+    <p style="margin-top:10px;">매달의 정념수련이 단지 5시간 앉아있는 것이 아니라 <strong>기(氣)의 공력을 깊이 앉히는 시간</strong>임이 보입니다.</p>
+    <p>비움명상이 단지 단식이 아니라 <strong>정(精)을 깊이 정화하는 작업</strong>임이 보입니다.</p>
+    <p style="margin-top:10px;">호흡과 수승화강이 단지 기법이 아니라 <strong>기(氣)의 흐름을 회복하는 자리</strong>임이 보입니다.</p>
+    <p>심경의 마음 코칭이 단지 상담이 아니라 <strong>신(神)을 깨우는 작업</strong>임이 보입니다.</p>
+    <p style="margin-top:10px;">그리고 — 이 모든 것이 따로 가는 것이 아니라 <strong>한 사람 안에서 함께 움직이는 큰 흐름</strong>임이 보입니다.</p>
+  </div>
+
+  <p>이 시선을 갖게 되시면, 회원분들의 수련이 정직해집니다. 자기가 지금 어떤 자리에서 수련하고 있는지 알게 되시고, 다음에 어디로 가고 있는지 보이기 시작합니다.</p>
+
+  <h3>다시 OJT로 — 자기 자리 확인하기</h3>
+
+  <p>정기신이라는 큰 그림을 만나신 지금, 다시 한 번 <strong>OJT 자료의 수련체계 전체 지도</strong>를 펼쳐 보시기를 권합니다.</p>
+
+  <p>처음 OJT를 만나셨을 때는 9단계의 수련, 4자리, 81시퀀스가 어렵게 느껴지셨을 수 있습니다. 그러나 정기신이라는 큰 그림을 만나신 지금은 — <strong>그 모든 체계가 정·기·신을 어떻게 펼치고 통합하는지를 가르치는 길</strong>임이 보이실 것입니다.</p>
+
+  <div class="bridge-box">
+    <div class="bridge-mark">RETURN TO MAP</div>
+    <div class="bridge-title">
+      수련체계 전체 지도로 돌아가기
+    </div>
+    <div class="bridge-text">
+      정기신이라는 큰 그림을 만나신 지금,<br>
+      <strong>OJT 자료(수련체계 전체 지도)</strong>를 다시 펼쳐 보시면<br>
+      자기 수련의 자리가 더 명료하게 보이실 것입니다.<br><br>
+      9단계의 수련, 4자리, 81시퀀스가<br>
+      모두 정·기·신을 펼치고 통합하는 길임을<br>
+      자기 자리에서 알아차리시게 될 것입니다.
+    </div>
+  </div>
+
+  <h3>마무리하며</h3>
+
+  <p>이 자료가 길었습니다. 정기신이라는 큰 그림을 한 자리에 모으는 일이라 어쩔 수 없이 깊이 들어가야 했습니다.</p>
+
+  <p>그러나 한 가지만 마음에 남기시면 됩니다.</p>
+
+  <div class="quote">
+    정기신은 따로 가지 않습니다.<br>
+    한 사람 안에서<br>
+    하나의 흐름으로<br>
+    함께 움직이는 흐름입니다.
+    <em>— 이 자료의 한 마음 —</em>
+  </div>
+
+  <p>회원분들의 매일 — 식사 한 끼, 호흡 한 번, 마음 한 자락에 — 정·기·신이 함께 움직이고 있습니다. 그것을 알아차리며 살아가는 길이 곧 수련입니다.</p>
+
+  <p>선한인연 선한명상은 그 길을 함께 걸어가는 자리입니다. 회원분들 한 분 한 분이 자기 자리에서 정기신을 살아내실 때 — 우리의 수련 공동체가 깊어집니다.</p>
+
+  <div class="recall-box">
+    <div class="recall-mark">"</div>
+    <div class="recall-text">
+      이 자료가<br>
+      회원분들의 수련에 작은 거울이 되었으면 합니다.<br><br>
+
+      정·기·신을 만난 자기 자리에서<br>
+      <strong>매일 새롭게, 매일 깊어지는 마음으로<br>
+      함께 걸어가시기를</strong>.
+    </div>
+    <div class="recall-attr">— 시아님 · 정기신 자료를 마무리하며</div>
+  </div>
+
+  <p>같은 자리에서 함께 걸어가겠습니다. 🙏</p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     풋터 (수정 불필요)
+     ═══════════════════════════════════════════════════════════ -->
+<div class="footer">
+  <div class="sign">선한인연 선한명상</div>
+  <div>회원 전용 자료 · 함께 걸어가는 길의 기록</div>
+
+  <div class="copyright">
+    <strong>© 2026 선한인연 선한명상 · All rights reserved</strong>
+    본 자료는 선한인연 선한명상 회원을 위해 제작된 자료입니다.<br>
+    무단 전재 · 복제 · 재배포 · 2차 가공 · 외부 공유를 금합니다.<br>
+    문의: 선한인연 선한명상 (서울 광진구 광장동)
+  </div>
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     잠금 시스템 스크립트 (수정 불필요)
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+  const PASSWORD = "sunhan2026";
+  const STORAGE_KEY = "sunhan_unlocked";
+  const EXPIRY_DAYS = 30;
+
+  function isUnlocked() {
+    try {
+      const data = localStorage.getItem(STORAGE_KEY);
+      if (!data) return false;
+      const parsed = JSON.parse(data);
+      if (!parsed.timestamp) return false;
+      const elapsed = Date.now() - parsed.timestamp;
+      const expiry = EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+      if (elapsed > expiry) {
+        localStorage.removeItem(STORAGE_KEY);
+        return false;
+      }
+      return parsed.unlocked === true;
+    } catch(e) { return false; }
+  }
+
+  function setUnlocked() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        unlocked: true,
+        timestamp: Date.now()
+      }));
+    } catch(e) {}
+  }
+
+  if (isUnlocked()) {
+    document.body.classList.remove('locked');
+    document.body.classList.add('unlocked');
+  }
+
+  function tryUnlock() {
+    const input = document.getElementById('lock-input');
+    const err = document.getElementById('lock-error');
+    if (input.value === PASSWORD) {
+      document.body.classList.remove('locked');
+      document.body.classList.add('unlocked');
+      setUnlocked();
+    } else {
+      err.textContent = '비밀번호가 맞지 않습니다.';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  document.getElementById('lock-btn').addEventListener('click', tryUnlock);
+  document.getElementById('lock-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryUnlock();
+  });
+
+  window.addEventListener('load', function() {
+    if (document.body.classList.contains('locked')) {
+      document.getElementById('lock-input').focus();
+    }
+  });
+
+  // TOC 부드러운 스크롤
+  document.querySelectorAll('.toc-item a').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
