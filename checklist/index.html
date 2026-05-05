@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>체크리스트 자료실 | 선한인연 선한명상</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f4f2ee;
+    color: #2c2c2c;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7;
+  }
+
+  /* ════════════════════════════════════
+     헤더
+     ════════════════════════════════════ */
+  .header {
+    background: linear-gradient(180deg, #1a2a3a 0%, #142030 100%);
+    text-align: center;
+    padding: 70px 24px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 24px; left: 50%;
+    transform: translateX(-50%);
+    width: 36px; height: 1px;
+    background: #8cc63f;
+    opacity: 0.6;
+  }
+  .header-brand {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #8cc63f;
+    font-weight: 500;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  .header-sub {
+    font-size: 14.5px;
+    color: #98a8b8;
+    font-weight: 300;
+    line-height: 2;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .header-sub strong { color: #8cc63f; font-weight: 500; }
+
+  @media (max-width: 480px) {
+    .header { padding: 50px 20px 40px; }
+    .header h1 { font-size: 24px; }
+    .header-sub { font-size: 13px; }
+  }
+
+  /* ════════════════════════════════════
+     섹션 공통
+     ════════════════════════════════════ */
+  .section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 24px;
+  }
+
+  .section-tag {
+    text-align: center;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 13px;
+    color: #8cc63f;
+    letter-spacing: 0.2em;
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    color: #1a2a3a;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .section-desc {
+    text-align: center;
+    font-size: 13.5px;
+    color: #6a7a8a;
+    line-height: 2;
+    max-width: 440px;
+    margin: 0 auto 40px;
+  }
+
+  /* ════════════════════════════════════
+     체크리스트 카드 (현재 자료)
+     ════════════════════════════════════ */
+  .checklist-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 32px 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 4px;
+    height: 100%;
+    background: #8cc63f;
+    transition: width 0.3s;
+  }
+  .card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .card:hover::before {
+    width: 6px;
+  }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .card-icon {
+    width: 52px; height: 52px;
+    background: #f4f8ec;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .card-title-wrap {
+    flex: 1;
+  }
+  .card-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a2a3a;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .card-tag {
+    font-size: 11.5px;
+    color: #8a9aa8;
+    letter-spacing: 0.05em;
+  }
+  .card-arrow {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f4f8ec;
+    display: flex; align-items: center; justify-content: center;
+    color: #8cc63f;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .card:hover .card-arrow {
+    background: #8cc63f;
+    color: #fff;
+    transform: translateX(2px);
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: #4a5a6a;
+    line-height: 1.95;
+    padding-left: 68px;
+  }
+  .card-desc strong {
+    color: #1a2a3a;
+    font-weight: 500;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 14px;
+    margin-top: 16px;
+    padding: 14px 0 0 68px;
+    border-top: 1px solid #f0eee8;
+    margin-top: 18px;
+    padding-top: 14px;
+    font-size: 12px;
+    color: #98a8b8;
+  }
+  .card-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-meta-item::before {
+    content: '·';
+    color: #8cc63f;
+    margin-right: 2px;
+  }
+  .card-meta-item:first-child::before {
+    content: '';
+    margin-right: 0;
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 24px 20px; }
+    .card-icon { width: 44px; height: 44px; font-size: 20px; }
+    .card-title { font-size: 16px; }
+    .card-desc { padding-left: 0; padding-top: 12px; font-size: 13.5px; }
+    .card-meta { padding-left: 0; flex-wrap: wrap; gap: 8px; }
+  }
+
+  /* ════════════════════════════════════
+     앞으로의 자료들 (예정)
+     ════════════════════════════════════ */
+  .upcoming {
+    background: #fff;
+    padding: 50px 30px;
+    border-radius: 14px;
+    margin-top: 16px;
+    border: 1px dashed #d0d0c8;
+  }
+  .upcoming-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px;
+    color: #6a7a8a;
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .upcoming-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .upcoming-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: #fafaf6;
+    border-radius: 10px;
+    color: #6a7a8a;
+    font-size: 14px;
+  }
+  .upcoming-item-icon {
+    width: 32px; height: 32px;
+    background: #f0f0e8;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    color: #98a8b8;
+  }
+  .upcoming-item-text {
+    flex: 1;
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 500;
+  }
+  .upcoming-item-status {
+    font-size: 11px;
+    color: #b8b8b0;
+    letter-spacing: 0.05em;
+  }
+
+  /* ════════════════════════════════════
+     CTA — 카카오톡 상담
+     ════════════════════════════════════ */
+  .cta-section {
+    background: linear-gradient(180deg, #1a2a3a 0%, #142030 100%);
+    color: #fff;
+    text-align: center;
+    padding: 60px 30px;
+    margin-top: 60px;
+  }
+  .cta-divider {
+    width: 30px;
+    height: 1px;
+    background: #8cc63f;
+    margin: 0 auto 22px;
+    opacity: 0.6;
+  }
+  .cta-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #fff;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+  }
+  .cta-text {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13.5px;
+    color: #a8b8c8;
+    margin-bottom: 30px;
+    line-height: 2;
+  }
+  .cta-button {
+    display: inline-block;
+    padding: 16px 40px;
+    background: transparent;
+    color: #fff;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
+    font-size: 14.5px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1px solid #8cc63f;
+    letter-spacing: 0.05em;
+  }
+  .cta-button:hover {
+    background: #8cc63f;
+    color: #1a2a3a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(140, 198, 63, 0.3);
+  }
+
+  /* ════════════════════════════════════
+     Footer
+     ════════════════════════════════════ */
+  .footer {
+    text-align: center;
+    padding: 40px 30px;
+    color: #6a8aaa;
+    font-size: 12px;
+    background: #142030;
+  }
+  .footer-sign {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 15px;
+    color: #8cc63f;
+    margin-bottom: 10px;
+    letter-spacing: 0.15em;
+  }
+  .footer-divider {
+    width: 30px;
+    height: 1px;
+    background: #8cc63f;
+    margin: 0 auto 16px;
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     헤더
+     ════════════════════════════════════ -->
+<div class="header">
+  <div class="header-brand">선한인연 선한명상 · 자가 진단</div>
+  <h1>체크리스트 자료실</h1>
+  <div class="header-sub">
+    자기 상태를 살펴보는 시간 —<br>
+    <strong>작은 신호에서부터</strong> 회복은 시작됩니다.
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     현재 자료들
+     ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-tag">— 지금 만나실 수 있는 —</div>
+  <h2 class="section-title">자가 진단 체크리스트</h2>
+  <p class="section-desc">
+    정기신(精氣神)의 통합으로 자기 상태를 살펴봅니다.<br>
+    체크 후 — 회복의 길을 함께 안내해 드립니다.
+  </p>
+
+  <div class="checklist-cards">
+
+    <!-- 호르몬 체크리스트 -->
+    <a href="../checklist/hormone/" class="card">
+      <div class="card-head">
+        <div class="card-icon">🌙</div>
+        <div class="card-title-wrap">
+          <div class="card-title">호르몬 셀프 테스트</div>
+          <div class="card-tag">5가지 호르몬 균형 진단</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+      <div class="card-desc">
+        잠·체력·기분·관계·식사 — 다섯 가지 일상의 결을 통해<br>
+        <strong>멜라토닌·성장호르몬·세로토닌·옥시토신·인슐린</strong>의<br>
+        균형 상태를 살펴봅니다.
+      </div>
+      <div class="card-meta">
+        <div class="card-meta-item">20문항</div>
+        <div class="card-meta-item">5분 소요</div>
+        <div class="card-meta-item">개인화된 회복법 안내</div>
+      </div>
+    </a>
+
+    <!-- 에너지 체크리스트 -->
+    <a href="../checklist/energy/" class="card">
+      <div class="card-head">
+        <div class="card-icon">⚡</div>
+        <div class="card-title-wrap">
+          <div class="card-title">에너지 부족 체크리스트</div>
+          <div class="card-tag">정·기·신 통합 진단</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+      <div class="card-desc">
+        몸의 신호·흐름과 순환·마음과 의식 — 세 가지를 통해<br>
+        <strong>정(精)·기(氣)·신(神)</strong>의 통합 상태를 살펴봅니다.<br>
+        9단계 좌선 명상법 추천이 함께 안내됩니다.
+      </div>
+      <div class="card-meta">
+        <div class="card-meta-item">20문항</div>
+        <div class="card-meta-item">5분 소요</div>
+        <div class="card-meta-item">9단계 명상법 추천</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     앞으로의 자료들
+     ════════════════════════════════════ -->
+<div class="section" style="padding-top: 0;">
+  <div class="upcoming">
+    <div class="upcoming-title">— 앞으로 추가될 자료들 —</div>
+    <div class="upcoming-list">
+
+      <div class="upcoming-item">
+        <div class="upcoming-item-icon">💭</div>
+        <div class="upcoming-item-text">마음 진단 체크리스트</div>
+        <div class="upcoming-item-status">예정</div>
+      </div>
+
+      <div class="upcoming-item">
+        <div class="upcoming-item-icon">💗</div>
+        <div class="upcoming-item-text">관계 진단 체크리스트</div>
+        <div class="upcoming-item-status">예정</div>
+      </div>
+
+      <div class="upcoming-item">
+        <div class="upcoming-item-icon">🌱</div>
+        <div class="upcoming-item-text">습관 진단 체크리스트</div>
+        <div class="upcoming-item-status">예정</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     CTA — 카카오톡 상담
+     ════════════════════════════════════ -->
+<div class="cta-section">
+  <div class="cta-divider"></div>
+  <div class="cta-title">
+    체크리스트 결과가 궁금하신가요?
+  </div>
+  <p class="cta-text">
+    회복의 길은 — 자기 자신을 살펴보는 시간에서 시작됩니다.<br>
+    선한인연 선한명상에서 함께 만나실 수 있습니다.
+  </p>
+  <a href="https://open.kakao.com/o/seQTrvti" class="cta-button" target="_blank">
+    카카오톡 상담 바로가기 →
+  </a>
+</div>
+
+<!-- ════════════════════════════════════
+     Footer
+     ════════════════════════════════════ -->
+<div class="footer">
+  <div class="footer-divider"></div>
+  <div class="footer-sign">선한인연 선한명상</div>
+  <div>SUNHANMIND · Seoul · 2026</div>
+</div>
+
+</body>
+</html>
