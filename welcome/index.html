@@ -135,8 +135,8 @@ body {
    ════════════════════════════════════ */
 .first-page {
   background: var(--paper);
-  padding: 120px 60px 80px;
-  min-height: 80vh;
+  padding: 110px 60px 90px;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -159,8 +159,51 @@ body {
   line-height: 1.6;
   color: var(--ink);
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
   letter-spacing: -0.01em;
+}
+
+.welcome-essence-mark {
+  width: 30px;
+  height: 1px;
+  background: var(--ink-faint);
+  margin: 0 auto 40px;
+  opacity: 0.4;
+}
+
+.welcome-quote {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 2;
+  color: var(--ink-light);
+  text-align: center;
+  letter-spacing: 0.02em;
+  margin: 0 auto;
+  max-width: 480px;
+  font-style: normal;
+  position: relative;
+  padding: 0 20px;
+}
+
+.welcome-quote-line {
+  display: block;
+}
+
+.welcome-quote em {
+  font-style: normal;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.welcome-quote-divider {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 0.3em;
+  margin: 36px 0;
+  opacity: 0.55;
+  font-family: 'Noto Serif KR', serif;
 }
 
 .welcome-divider {
@@ -835,7 +878,9 @@ body {
   .cover { padding: 80px 30px; }
   .cover-poem { font-size: 30px; }
   .first-page { padding: 80px 30px; }
-  .welcome-title { font-size: 28px; }
+  .welcome-title { font-size: 28px; margin-bottom: 50px; }
+  .welcome-quote { font-size: 17px; line-height: 1.95; padding: 0 10px; }
+  .welcome-quote-divider { margin: 28px 0; }
   .section-first { padding: 60px 30px; }
   .section-h1 { font-size: 26px; }
   .section-quote { font-size: 20px; }
@@ -925,6 +970,22 @@ body {
       선한인연 선한명상에<br>
       처음 오시는 분께
     </h1>
+
+    <div class="welcome-essence-mark"></div>
+
+    <p class="welcome-quote">
+      <span class="welcome-quote-line"><em>무언가가 되려고 오신 게 아닙니다.</em></span>
+      <span class="welcome-quote-line">있는 그대로의 자신과,</span>
+      <span class="welcome-quote-line"><em>다시 만나기 위한 시간입니다.</em></span>
+    </p>
+
+    <div class="welcome-quote-divider">◌</div>
+
+    <p class="welcome-quote">
+      <span class="welcome-quote-line"><em>고치려 들지 않습니다.</em></span>
+      <span class="welcome-quote-line">바라보는 그 자리에서,</span>
+      <span class="welcome-quote-line"><em>이미 풀려나기 시작합니다.</em></span>
+    </p>
   </div>
 
   <!-- ════════════════════════════════════
@@ -1323,8 +1384,9 @@ body {
     </div>
 
     <p class="section-body" style="text-align: center; margin: 50px 0 30px; color: var(--ink);">
-      자세한 회비 안내는 — 상담 시 자기 결과 가장 잘 어울리는<br>
-      길과 함께 살펴드립니다.
+      자세한 회비 안내는 —<br>
+      사람마다 다른 체질, 기질, 성질을 살핀 후,<br>
+      한 분께 맞는 수련 방향을 안내해드립니다.
     </p>
 
     <div class="body-divider"></div>
