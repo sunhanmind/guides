@@ -369,10 +369,35 @@ body {
   letter-spacing: -0.01em;
 }
 
+.step-shift {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13.5px;
+  color: var(--gold-thin);
+  font-style: italic;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  font-weight: 400;
+}
+
 .step-desc {
   font-size: 14.5px;
   color: var(--ink-light);
   line-height: 1.7;
+}
+
+.step-practice {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin-top: 10px;
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+
+.step-practice-label {
+  font-weight: 500;
+  color: var(--gold-thin);
+  margin-right: 4px;
 }
 
 /* ════════════════════════════════════
@@ -892,7 +917,9 @@ body {
   .step-row { gap: 20px; padding: 18px 0; }
   .step-num { font-size: 18px; min-width: 32px; }
   .step-name { font-size: 17px; }
+  .step-shift { font-size: 12px; margin-bottom: 6px; }
   .step-desc { font-size: 13.5px; }
+  .step-practice { font-size: 12px; margin-top: 8px; }
 
   /* 프로그램 카드 */
   .program-card { padding: 30px 25px; }
@@ -1277,7 +1304,9 @@ body {
         <div class="step-num">01</div>
         <div class="step-text">
           <div class="step-name">깨어난다</div>
+          <div class="step-shift">외부 → 내부</div>
           <div class="step-desc">감각에 주의를 돌리는 순간 — 의식이 외부에서 내부로</div>
+          <div class="step-practice"><span class="step-practice-label">수련 —</span> 18개 관절 인지 · 피부 기감 · 음양 손</div>
         </div>
       </div>
 
@@ -1285,7 +1314,9 @@ body {
         <div class="step-num">02</div>
         <div class="step-text">
           <div class="step-name">풀려나간다</div>
+          <div class="step-shift">긴장 → 정화</div>
           <div class="step-desc">긴장을 내려놓고 — 누적된 신체·정서적 긴장이 해소</div>
+          <div class="step-practice"><span class="step-practice-label">수련 —</span> 양지감 확산 · 기공 정화 · 늑골·횡격막 이완</div>
         </div>
       </div>
 
@@ -1293,7 +1324,9 @@ body {
         <div class="step-num">03</div>
         <div class="step-text">
           <div class="step-name">가라앉는다</div>
+          <div class="step-shift">흩어짐 → 중심</div>
           <div class="step-desc">에너지가 아래로 침잠 — 흩어진 에너지가 중심으로</div>
+          <div class="step-practice"><span class="step-practice-label">수련 —</span> 음지감 침잠 · 턱관절 이완 · 상허하실(上虛下實)</div>
         </div>
       </div>
 
@@ -1301,7 +1334,9 @@ body {
         <div class="step-num">04</div>
         <div class="step-text">
           <div class="step-name">기다린다</div>
+          <div class="step-shift">반응 → 공간</div>
           <div class="step-desc">조급함 없이 — 반응과 선택 사이에 공간이 생긴다</div>
+          <div class="step-practice"><span class="step-practice-label">수련 —</span> 수식관(숫자 사이 공간) · 호흡 사이 머무름</div>
         </div>
       </div>
 
@@ -1309,7 +1344,9 @@ body {
         <div class="step-num">05</div>
         <div class="step-text">
           <div class="step-name">바라본다</div>
+          <div class="step-shift">판단 → 직시</div>
           <div class="step-desc">저항 없이 내면을 관찰 — 판단 없이 있는 그대로</div>
+          <div class="step-practice"><span class="step-practice-label">수련 —</span> 외부 시선 돌이킴 · 바라봄의 자리 · 정념</div>
         </div>
       </div>
 
@@ -1317,7 +1354,9 @@ body {
         <div class="step-num">06</div>
         <div class="step-text">
           <div class="step-name">알아차린다</div>
+          <div class="step-shift">반복 → 통찰</div>
           <div class="step-desc">반복되는 패턴과 무의식적 반응을 인식 — 감정의 뿌리를 감각으로</div>
+          <div class="step-practice"><span class="step-practice-label">수련 —</span> 메타인지 · 점→선→면→형 · 무의식 정화</div>
         </div>
       </div>
 
@@ -1325,7 +1364,9 @@ body {
         <div class="step-num">07</div>
         <div class="step-text">
           <div class="step-name">받아들인다</div>
+          <div class="step-shift">저항 → 수용</div>
           <div class="step-desc">불편한 감각과 감정을 저항 없이 — 수용이 변화의 시작</div>
+          <div class="step-practice"><span class="step-practice-label">수련 —</span> 음양 감정 수용 · 내 꼴 / 내 길 · 회심(回心)</div>
         </div>
       </div>
 
@@ -1333,7 +1374,9 @@ body {
         <div class="step-num">08</div>
         <div class="step-text">
           <div class="step-name">연결된다</div>
+          <div class="step-shift">분리 → 공명</div>
           <div class="step-desc">분리된 자아 감각이 이완 — 고립에서 관계로, 긴장에서 공명으로</div>
+          <div class="step-practice"><span class="step-practice-label">수련 —</span> 음양 합일 · 회음~백회 · 무한 회전공 · 항심(恒心)</div>
         </div>
       </div>
 
@@ -1341,7 +1384,9 @@ body {
         <div class="step-num">09</div>
         <div class="step-text">
           <div class="step-name">스며든다</div>
+          <div class="step-shift">수련 → 삶</div>
           <div class="step-desc">수련이 일상 전체로 통합 — 삶이 곧 명상이 되는 순간</div>
+          <div class="step-practice"><span class="step-practice-label">검증 —</span> 정기신 합일 · 부동심(不動心) · 몸의 변화 · 시선의 변화 · 삶의 변화</div>
         </div>
       </div>
     </div>
